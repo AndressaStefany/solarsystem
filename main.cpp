@@ -67,7 +67,7 @@ void time(int t)
 
 int main(int argc, char**argv)
 {
-    Loading teste("cube.obj");
+    Loading teste("../cube.obj");
     glutInit(&argc, argv);
 
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
