@@ -9,9 +9,9 @@ movimentação da câmera a partir do movimento do mouse, para que seja possíve
 
 * OpenGL e GLUT
 ```
-$sudo apt-get install freeglut3-dev
+$ sudo apt-get install freeglut3-dev
 ```
 * libxmu e libxi
 ```
-sudo apt-get install libxmu-dev libxi-dev
+$ sudo apt-get install libxmu-dev libxi-dev
 ```
