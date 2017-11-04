@@ -33,7 +33,7 @@ void display()
 
     glPushMatrix();
     glColor3f(1,0,0);
-    glutSolidCube(1);
+    glutWireCube(1);
     glPopMatrix();
 
     glutSwapBuffers();
@@ -41,17 +41,18 @@ void display()
 
 void mouse(int butao, int estado, int x, int y)
 {
+    last_x=x;
+    last_y=y;
     if(butao == GLUT_LEFT_BUTTON && estado == GLUT_DOWN)
     {
-        last_x=x;
-        last_y=y;
+
     }
 }
 
 void motion(int x, int y)
 {
-    dx+= (x-last_x)*0.5;
-    dy+= (y-last_y)*0.5;
+    dx+= (x-last_x)*0.3;
+    dy+= (y-last_y)*0.3;
 
     last_x= x;
     last_y= y;
