@@ -65,21 +65,23 @@ void time(int t)
     glutTimerFunc(30, time, t);
 }
 
+#include "algebra.h"
+
 int main(int argc, char**argv)
 {
-    Loading teste("../cube.obj");
-    glutInit(&argc, argv);
-
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-    glutInitWindowSize(640,480);
-    glutCreateWindow("SolarSys");
-
-    glutDisplayFunc(display);
-    glutReshapeFunc(reshape);
-    glutMouseFunc(mouse);
-    glutMotionFunc(motion);
-    glutTimerFunc(30,time,0);
-
-    glClearColor(1,1,1,1);
-    glutMainLoop();
+//    Loading teste("../cube.obj");
+//    glutInit(&argc, argv);
+//
+//    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+//    glutInitWindowSize(640,480);
+//    glutCreateWindow("SolarSys");
+//
+//    glutDisplayFunc(display);
+//    glutReshapeFunc(reshape);
+//    glutMouseFunc(mouse);
+//    glutMotionFunc(motion);
+//    glutTimerFunc(30,time,0);
+//
+//    glClearColor(1,1,1,1);
+//    glutMainLoop();
 }
