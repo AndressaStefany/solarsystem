@@ -12,6 +12,13 @@
 
 using namespace std;
 
+struct material
+{
+    float Ka[4], Kd[4], Ks[4], Ke[4];
+    float Ns= 0;
+//    Texture* mapK= NULL, *map_Bump= NULL;
+    string name;
+};
 struct face
 {
     vec3 v[3];
@@ -21,18 +28,11 @@ struct face
 struct mesh
 {
     vector<face> faces;
-//    material* mat;
+    material* mat;
 };
 struct object
 {
     vector<mesh> meshs;
-    string name;
-};
-struct material
-{
-    float Ka[4], Kd[4], Ks[4], Ke[4];
-    float Ns= 0;
-//    Texture* mapK= NULL, *map_Bump= NULL;
     string name;
 };
 

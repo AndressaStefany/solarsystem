@@ -7,13 +7,11 @@
 
 Loading::Loading(string arquivo)
 {
-    int vertice=0, normal=0, textura=0, face=0, conj_face=0;
-    ifstream ifs;
+    ifstream ifs(arquivo, ifstream::in);
 
-    ifs.open(arquivo, ifstream::in);
-
+    vector<vec3> vertices, normais;
+    vector<vec2> texturas;
     string buffer;
-
     object estrutura_obj;
 
     while (getline(ifs,buffer))
@@ -24,50 +22,40 @@ Loading::Loading(string arquivo)
         if(buffer == "o")
         {
             ss >> estrutura_obj.name;
-
             cout << "Objeto: " << estrutura_obj.name << endl;
+        }
+        else if(buffer == "usemtl")
+        {
+
         }
         else if(buffer == "v")
         {
-//            ss >> estrutura_obj.meshs[conj_face].faces[face].v[0]
-//               >> estrutura_obj.meshs[conj_face].faces[face].v[1]
-//               >> estrutura_obj.meshs[conj_face].faces[face].v[2];
-
-//            cout << buffer << " " << x[0] << " " << x[1] << " " << x[2] << endl;
-
-            vertice++;
+            vec3 v;
+            ss >> v[0] >> v[1] >> v[2];
+            vertices.push_back(v);
         }
         else if(buffer == "vt")
         {
-            float x[2];
-            ss >> x[0] >> x[1];
-            cout << buffer << " " << x[0] << " " << x[1] << endl;
-
-            textura++;
+            vec2 v;
+            ss >> v[0] >> v[1];
+            texturas.push_back(v);
         }
         else if(buffer == "vn")
         {
-            float x[3];
-            ss >> x[0] >> x[1] >> x[2];
-            cout << buffer << " " << x[0] << " " << x[1] << " " << x[2] << endl;
-
-            normal++;
+            vec3 v;
+            ss >> v[0] >> v[1] >> v[2];
+            normais.push_back(v);
         }
         else if(buffer == "f")
         {
             string x[3];
             ss >> x[0] >> x[1] >> x[2];
             cout << buffer << " " << x[0] << " " << x[1] << " " << x[2] << endl;
-
-            face++;
         }
         else
         {
             cout << endl;
-
         }
-
     }
-
     ifs.close();
 }

@@ -12,8 +12,9 @@ using std::istream;
 using std::endl;
 
 class vec2 {
-    double n[2];
 public:
+    double n[2];
+    vec2();
     vec2(double x,double y);
     double& operator[](int i);
 
@@ -36,6 +37,7 @@ public:
 class vec3 {
 public:
     double n[3];
+    vec3();
     vec3(double x,double y,double z);
     double& operator[](int i);
 

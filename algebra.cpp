@@ -10,6 +10,12 @@ vec3::vec3(double x, double y, double z) {
     n[2]= z;
 }
 
+vec3::vec3() {
+    n[0]= 0;
+    n[1]= 0;
+    n[2]= 0;
+}
+
 double &vec3::operator[](int i) {
     return n[i];
 }
@@ -146,4 +152,9 @@ ostream &operator<<(ostream &out, vec2 &a) {
 istream &operator>>(istream &in, vec2 &a) {
     in >> a.n[0] >> a.n[1];
     return in;
+}
+
+vec2::vec2() {
+    n[0]= 0;
+    n[1]= 1;
 }
