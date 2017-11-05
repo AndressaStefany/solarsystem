@@ -78,3 +78,72 @@ istream &operator>>(istream &in, vec3 &a) {
     in >> a.n[0] >> a.n[1] >> a.n[2];
     return in;
 }
+
+vec2::vec2(double x, double y) {
+    n[0]= x;
+    n[1]= y;
+}
+
+double &vec2::operator[](int i) {
+    return n[i];
+}
+
+vec2 &vec2::operator=(const vec2 &a) {
+    n[0]= a.n[0];
+    n[1]= a.n[1];
+    return *this;
+}
+
+vec2 &vec2::operator+=(const vec2 &a) {
+    n[0]+= a.n[0];
+    n[1]+= a.n[1];
+    return *this;
+}
+
+vec2 &vec2::operator-=(const vec2 &a) {
+    n[0]-= a.n[0];
+    n[1]-= a.n[1];
+    return *this;
+}
+
+vec2 &vec2::operator*=(double k) {
+    n[0]*=k;
+    n[1]*=k;
+    return *this;
+}
+
+vec2 &vec2::operator/=(double k) {
+    n[0]/=k;
+    n[1]/=k;
+    return *this;
+}
+
+vec2 operator+(const vec2 &a, const vec2 &b) {
+    return vec2(a.n[0]+b.n[0], a.n[1]+b.n[1]);
+}
+
+vec2 operator-(const vec2 &a) {
+    return vec2(-a.n[0], -a.n[1]);
+}
+
+vec2 operator-(const vec2 &a, const vec2 &b) {
+    return vec2(a.n[0]-b.n[0], a.n[1]-b.n[1]);
+}
+
+vec2 operator*(const vec2 &a, double k) {
+    return vec2(k*a.n[0], k*a.n[1]);
+}
+
+vec2 operator*(double k, const vec2 &a) {
+    return vec2(a.n[0]*k, a.n[1]*k);
+}
+
+ostream &operator<<(ostream &out, vec2 &a) {
+    out << a.n[0] << " " << a.n[1] << endl;
+    return out;
+}
+
+istream &operator>>(istream &in, vec2 &a) {
+    in >> a.n[0] >> a.n[1];
+    return in;
+}
