@@ -34,8 +34,8 @@ public:
 };
 
 class vec3 {
-    double n[3];
 public:
+    double n[3];
     vec3(double x,double y,double z);
     double& operator[](int i);
 

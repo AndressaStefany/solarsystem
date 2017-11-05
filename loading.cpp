@@ -7,11 +7,14 @@
 
 Loading::Loading(string arquivo)
 {
-    std::ifstream ifs;
+    int vertice=0, normal=0, textura=0, face=0, conj_face=0;
+    ifstream ifs;
 
-    ifs.open(arquivo, std::ifstream::in);
+    ifs.open(arquivo, ifstream::in);
 
     string buffer;
+
+    object estrutura_obj;
 
     while (getline(ifs,buffer))
     {
@@ -20,38 +23,47 @@ Loading::Loading(string arquivo)
 
         if(buffer == "o")
         {
-            string objeto;
-            ss >> objeto;
+            ss >> estrutura_obj.name;
 
-            cout << "objeto: " << objeto << endl;
+            cout << "Objeto: " << estrutura_obj.name << endl;
         }
         else if(buffer == "v")
         {
-            float x[3];
-            ss >> x[0] >> x[1] >> x[2];
-            cout << buffer << " " << x[0] << " " << x[1] << " " << x[2] << endl;
+//            ss >> estrutura_obj.meshs[conj_face].faces[face].v[0]
+//               >> estrutura_obj.meshs[conj_face].faces[face].v[1]
+//               >> estrutura_obj.meshs[conj_face].faces[face].v[2];
+
+//            cout << buffer << " " << x[0] << " " << x[1] << " " << x[2] << endl;
+
+            vertice++;
         }
         else if(buffer == "vt")
         {
             float x[2];
             ss >> x[0] >> x[1];
             cout << buffer << " " << x[0] << " " << x[1] << endl;
+
+            textura++;
         }
         else if(buffer == "vn")
         {
             float x[3];
             ss >> x[0] >> x[1] >> x[2];
             cout << buffer << " " << x[0] << " " << x[1] << " " << x[2] << endl;
+
+            normal++;
         }
         else if(buffer == "f")
         {
             string x[3];
             ss >> x[0] >> x[1] >> x[2];
             cout << buffer << " " << x[0] << " " << x[1] << " " << x[2] << endl;
+
+            face++;
         }
         else
         {
-            cout <<"outra coisa"<<endl;
+            cout << endl;
 
         }
 
