@@ -106,17 +106,29 @@ void keyboard (unsigned char key, int x, int y)
          break;
       case 'x':
       case 'X':
-         speed_x -= acceleration*sin(ang_h);
-         speed_y -= -acceleration*sin(ang_v);
-         speed_z -= (acceleration*cos(ang_v) + acceleration*cos(ang_h));
-         if (speed_x < 0) {
-             speed_x = 0;
+         if (speed_x >= 0) {
+             speed_x -= acceleration*sin(ang_h);
+         } else {
+             speed_x += acceleration*sin(ang_h);
          }
-         if (speed_y < 0) {
-             speed_y = 0;
+         if (speed_y >= 0) {
+             speed_y -= -acceleration*sin(ang_v);
+         } else {
+             speed_y += -acceleration*sin(ang_v);
          }
-         if (speed_z < 0) {
-             speed_z = 0;
+         if (speed_z >= 0) {
+             speed_z -= (acceleration*cos(ang_v) + acceleration*cos(ang_h));
+         } else {
+             speed_z += (acceleration*cos(ang_v) + acceleration*cos(ang_h));
+         }
+         if (speed_x < -max_speed) {
+             speed_x = -max_speed;
+         }
+         if (speed_y < -max_speed) {
+             speed_y = -max_speed;
+         }
+         if (speed_z < -max_speed) {
+             speed_z = -max_speed;
          }
          break;
       default:
