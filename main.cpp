@@ -175,18 +175,9 @@ void time(int t)
     glutTimerFunc(30, time, t);
 }
 
-void init (void)
-{
-    glClearColor (0.0, 0.0, 0.0, 0.0);
-
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glOrtho(0.0, 1.0, 0.0, 1.0, -1.0, 1.0);
-}
-
 int main(int argc, char**argv)
 {
-    teste= new Loading("nave.obj");
+    teste= new Loading("nave");
 
     glutInit(&argc, argv);
 
@@ -195,7 +186,6 @@ int main(int argc, char**argv)
     glutInitWindowPosition (100, 100);
     glutCreateWindow("SolarSys");
 
-    init();
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
     glutMouseFunc(mouse);
