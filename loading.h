@@ -7,10 +7,13 @@
 
 #include <iostream>
 #include <fstream>
+#include <GL/gl.h>
 #include <vector>
 #include "algebra.h"
 
 using namespace std;
+
+vector<string> split(string name, char limite);
 
 struct material
 {
@@ -29,6 +32,7 @@ struct mesh
 {
     vector<face> faces;
     material* mat;
+    string name_mat;
 };
 struct object
 {
@@ -39,7 +43,9 @@ struct object
 class Loading {
 public:
     Loading(string arquivo);
+    void draw();
 private:
+    vector<object> obj;
 };
 
 

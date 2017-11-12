@@ -23,19 +23,20 @@ void reshape(int w, int h)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
+Loading *teste;
 
 void display()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glLoadIdentity();
-    glTranslatef(0,0,-5);
+    glTranslatef(0,0,-15);
     glRotatef(dy, 1,0,0);
     glRotatef(dx, 0,1,0);
 
     glPushMatrix();
-    glColor3f(1,0,0);
-    glutWireCube(1);
+//    glColor3f(1,0,0);
+    teste->draw();
     glPopMatrix();
 
     glutSwapBuffers();
@@ -68,7 +69,7 @@ void time(int t)
 
 int main(int argc, char**argv)
 {
-    Loading teste("../cube.obj");
+    teste= new Loading("../nave.obj");
     glutInit(&argc, argv);
 
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
