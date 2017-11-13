@@ -10,8 +10,8 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 0.375745
 illum 2
-map_Kd nava_texture/E45_glass_nor_.bmp
-map_Bump nava_texture/E45_glass_nor_.bmp
+map_Kd nave_texture/E45_glass_nor_.bmp
+map_Bump nave_texture/E45_glass_nor_.bmp
 
 newmtl ship
 Ns 17.647059
@@ -22,7 +22,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd nava_texture/E45_col.bmp
-map_Bump nava_texture/E45_nor_1.bmp
-map_Ks nava_texture/E45_col.bmp
-refl nava_texture/E45_REF 1.bmp
+map_Kd nave_texture/E45_col.bmp
+map_Bump nave_texture/E45_nor_1.bmp
+map_Ks nave_texture/E45_col.bmp
+refl nave_texture/E45_REF 1.bmp
