@@ -75,6 +75,14 @@ vec3 operator*(double k, const vec3 &a) {
     return vec3(k*a.n[0], k*a.n[1], k*a.n[2]);
 }
 
+vec3 operator/(const vec3 &a, double k) {
+    return vec3(a.n[0]/k, a.n[1]/k, a.n[2]/k);
+}
+
+vec3 operator/(double k, const vec3 &a) {
+    return vec3(k/a.n[0], k/a.n[1], k/a.n[2]);
+}
+
 ostream &operator<<(ostream &out, vec3 &a) {
     out << a.n[0] << " " << a.n[1] << " " << a.n[2] << " " << endl;
     return out;
@@ -84,6 +92,11 @@ istream &operator>>(istream &in, vec3 &a) {
     in >> a.n[0] >> a.n[1] >> a.n[2];
     return in;
 }
+
+double vec3::norma() {
+    return sqrt(n[0]*n[0]+n[1]*n[1]+n[2]*n[2]);
+}
+
 
 vec2::vec2(double x, double y) {
     n[0]= x;
@@ -143,6 +156,15 @@ vec2 operator*(const vec2 &a, double k) {
 vec2 operator*(double k, const vec2 &a) {
     return vec2(a.n[0]*k, a.n[1]*k);
 }
+
+vec2 operator/(const vec2 &a, double k) {
+    return vec2(a.n[0]/k, a.n[1]/k);
+}
+
+vec2 operator/(double k, const vec2 &a) {
+    return vec2(k/a.n[0], k/a.n[1]);
+}
+
 
 ostream &operator<<(ostream &out, vec2 &a) {
     out << a.n[0] << " " << a.n[1] << endl;

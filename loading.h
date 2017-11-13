@@ -8,6 +8,7 @@
 #include <iostream>
 #include <fstream>
 #include <GL/gl.h>
+#include <math.h>
 #include <vector>
 #include "texture.h"
 #include "algebra.h"
@@ -28,12 +29,33 @@ struct face
     vec3 v[3];
     vec3 n[3];
     vec2 t[3];
+    double area()
+    {
+        vec3 a=v[1]-v[0], b=v[2]-v[0];
+        return sqrt(pow(a[1]*b[2]-a[2]*b[1],2)+pow(a[2]*b[0]-a[0]*b[2],2)+
+                    pow(a[0]*b[1]-a[1]*b[0],2));
+    }
+    vec3 centroid()
+    {
+        return (v[0]+v[1]+v[2])/3.0;
+    }
 };
 struct mesh
 {
     vector<face> faces;
     material* mat;
     string name_mat;
+    vec3 centroid()
+    {
+        vec3 res= vec3(0,0,0);
+        double total_area= 0;
+        for(auto& f: faces)
+        {
+            res+= f.centroid()*f.area();
+            total_area+=f.area();
+        }
+        return res/total_area;
+    }
 };
 struct object
 {
@@ -44,8 +66,8 @@ struct object
 class Loading {
 public:
     Loading(string arquivo);
-    void draw();
-private:
+    virtual void draw();
+protected:
     vector<object> obj;
     vector<material> mat;
     void load_obj(string arquivo);

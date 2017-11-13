@@ -11,7 +11,73 @@
 
 using namespace std;
 
-float dx = 0, dy = 0, last_x, last_y;
+class Nave : public Loading
+{
+public:
+    bool open= false;
+    Nave(string obj) : Loading(obj)
+    {
+
+    }
+    void draw()
+    {
+        glPushMatrix();
+        for(auto& o:obj){
+            for(auto& m:o.meshs) {
+                glPushMatrix();
+
+                if(o.name == "Cube.004_Cube.001")
+                {
+                    static double ang=0;
+                    if(open)
+                        ang= ang>50?51:ang+1;
+                    else
+                        ang= ang<1?0:ang-1;
+                    glTranslated(m.centroid().n[0], m.centroid().n[1], m.centroid().n[2]+1.5);
+                    glRotatef(ang,1,0,0);
+                    glTranslated(-m.centroid().n[0], -m.centroid().n[1], -m.centroid().n[2]-1.5);
+                    m.mat->Kd[3]= 0.4;
+                }
+
+                if(m.mat->mapK) {
+                    glActiveTexture(GL_TEXTURE0);
+                    glBindTexture(GL_TEXTURE_2D, m.mat->mapK->getID());
+                }
+                glMaterialfv(GL_FRONT, GL_AMBIENT, m.mat->Ka);
+                glMaterialfv(GL_FRONT, GL_DIFFUSE, m.mat->Kd);
+                glMaterialfv(GL_FRONT, GL_SPECULAR, m.mat->Ks);
+                glMaterialfv(GL_FRONT, GL_SHININESS, &m.mat->Ns);
+                glMaterialfv(GL_FRONT, GL_EMISSION, m.mat->Ke);
+                for(auto& f:m.faces) {
+                    glBegin(GL_TRIANGLES);
+                    glNormal3dv(f.n[0].n);
+                    glTexCoord2dv(f.t[0].n);
+                    glVertex3dv(f.v[0].n);
+
+                    glNormal3dv(f.n[1].n);
+                    glTexCoord2dv(f.t[1].n);
+                    glVertex3dv(f.v[1].n);
+
+                    glNormal3dv(f.n[2].n);
+                    glTexCoord2dv(f.t[2].n);
+                    glVertex3dv(f.v[2].n);
+                    glEnd();
+                }
+                glActiveTexture(GL_TEXTURE0);
+                glBindTexture(GL_TEXTURE_2D, 0);
+                glPopMatrix();
+                glPopMatrix();
+            }
+        }
+        glPopMatrix();
+    }
+};
+
+Loading *ceu;
+Nave *teste;
+
+float dx = 0, dy = 0, last_x, last_y, zoom= 15;
+int btt[3];
 float pos_x = 0, speed_x = 0;
 float pos_y = 0, speed_y = 0;
 float pos_z = 0, speed_z = 0;
@@ -24,12 +90,11 @@ void reshape(int w, int h)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     const float ar= (float)w/h;
-    gluPerspective(30,ar,0.1,100);
+    gluPerspective(30,ar,0.1,1000);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
-Loading *teste;
 
 void display()
 {
@@ -39,10 +104,10 @@ void display()
     pos_z += speed_z;
     
     glLoadIdentity();
-    glTranslatef(0,0,-15);
+    glTranslatef(0,0,-zoom);
     glRotatef(dy, 1,0,0);
     glRotatef(dx, 0,1,0);
-    //glTranslatef(pos_x,pos_y,pos_z-5);	//Fazer a camera acompanhar a nave, mais ou menos
+    glTranslatef(-pos_x,-pos_y,-pos_z);	//Fazer a camera acompanhar a nave
 
     //Nave
     glPushMatrix();
@@ -51,8 +116,6 @@ void display()
     glRotatef(ang_h,0,1,0);
 
     glPushMatrix();
-    glTranslatef(0,0,0.5);
-    glColor3f(1,0,0);
     teste->draw();	//Frente da nave
     glPopMatrix();
 
@@ -64,7 +127,12 @@ void display()
     glColor3f(1,1,0);
     glutWireSphere(0.5, 20, 16);
     glPopMatrix();
-    
+
+//    sky.draw();
+    glPushMatrix();
+    ceu->draw();
+    glPopMatrix();
+
     glutSwapBuffers();
 }
 
@@ -72,17 +140,25 @@ void mouse(int botao, int estado, int x, int y)
 {
     last_x=x;
     last_y=y;
-    if(botao == GLUT_LEFT_BUTTON && estado == GLUT_DOWN)
+    switch(botao)
     {
-
+        case GLUT_LEFT_BUTTON: btt[0] = ((GLUT_DOWN==estado)?1:0); break;
+        case GLUT_MIDDLE_BUTTON: btt[1] = ((GLUT_DOWN==estado)?1:0); break;
+        case GLUT_RIGHT_BUTTON: btt[2] = ((GLUT_DOWN==estado)?1:0); break;
+        case 3: zoom -= 0.3; break;
+        case 4: zoom += 0.3; break;
+        default:
+            break;
     }
 }
 
 void motion(int x, int y)
 {
-    dx += (x-last_x)*0.3;
-    dy += (y-last_y)*0.3;
-
+    if(btt[0])
+    {
+        dx += (x-last_x)*0.3;
+        dy += (y-last_y)*0.3;
+    }
     last_x = x;
     last_y = y;
 }
@@ -90,6 +166,12 @@ void motion(int x, int y)
 void keyboard (unsigned char key, int x, int y)
 {
    switch (key) {
+       case 'o':
+           teste->open= true;
+           break;
+       case 'p':
+           teste->open= false;
+           break;
       case 'z':
       case 'Z':
          speed_x += acceleration*sin(ang_h);
@@ -210,7 +292,8 @@ int main(int argc, char**argv)
 
     glEnable(GL_MULTISAMPLE_ARB);
 
-    teste= new Loading("nave");
+    teste= new Nave("nave");
+    ceu= new Loading("sky");
 
     //glClearColor(0,0,0,0);
     glutMainLoop();

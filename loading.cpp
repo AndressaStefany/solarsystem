@@ -33,21 +33,11 @@ Loading::Loading(string arquivo)
     obj_mtl();// relaciona materiais e objetos
 }
 
-#include <time.h>
-#include <cstdlib>
-
 void Loading::draw() {
-    srand(time(NULL));
     glPushMatrix();
     for(auto& o:obj){
         for(auto& m:o.meshs) {
             glPushMatrix();
-
-            if(o.name == "Cube.004_Cube.001")
-            {
-                m.mat->Kd[3]= 0.5;
-            }
-
             if(m.mat->mapK) {
                 glActiveTexture(GL_TEXTURE0);
                 glBindTexture(GL_TEXTURE_2D, m.mat->mapK->getID());

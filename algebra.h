@@ -7,6 +7,7 @@
 
 #include <ostream>
 #include <istream>
+#include <math.h>
 using std::ostream;
 using std::istream;
 using std::endl;
@@ -29,6 +30,8 @@ public:
     friend vec2 operator-(const vec2& a, const vec2& b);
     friend vec2 operator*(const vec2& a, double k);
     friend vec2 operator*(double k, const vec2& a);
+    friend vec2 operator/(const vec2& a, double k);
+    friend vec2 operator/(double k, const vec2& a);
 
     friend ostream& operator << (ostream& out, vec2& a);
     friend istream& operator >> (istream& in, vec2& a);
@@ -41,6 +44,8 @@ public:
     vec3(double x,double y,double z);
     double& operator[](int i);
 
+    double norma();
+
     vec3& operator=(const vec3 &a);
     vec3& operator+=(const vec3 &a);
     vec3& operator-=(const vec3 &a);
@@ -52,6 +57,8 @@ public:
     friend vec3 operator-(const vec3& a, const vec3& b);
     friend vec3 operator*(const vec3& a, double k);
     friend vec3 operator*(double k, const vec3& a);
+    friend vec3 operator/(const vec3& a, double k);
+    friend vec3 operator/(double k, const vec3& a);
 
     friend ostream& operator << (ostream& out, vec3& a);
     friend istream& operator >> (istream& in, vec3& a);
