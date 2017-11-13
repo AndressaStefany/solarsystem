@@ -44,11 +44,12 @@ class Loading {
 public:
     Loading(string arquivo);
     void draw();
-    void load_obj(string arquivo);
-    void load_mtl(string arquivo);
 private:
     vector<object> obj;
     vector<material> mat;
+    void load_obj(string arquivo);
+    void load_mtl(string arquivo);
+    void obj_mtl();
 };
 
 

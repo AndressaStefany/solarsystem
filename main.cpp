@@ -181,7 +181,7 @@ int main(int argc, char**argv)
 
     glutInit(&argc, argv);
 
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
     glutInitWindowSize(640,480);
     glutInitWindowPosition (100, 100);
     glutCreateWindow("SolarSys");
@@ -193,6 +193,10 @@ int main(int argc, char**argv)
     glutKeyboardFunc(keyboard);
     glutSpecialFunc(specialkeys);
     glutTimerFunc(30,time,0);
+
+    glShadeModel (GL_SMOOTH);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
 
     //glClearColor(0,0,0,0);
     glutMainLoop();

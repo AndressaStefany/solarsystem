@@ -30,7 +30,7 @@ Loading::Loading(string arquivo)
 {
     load_obj(arquivo+".obj");
     load_mtl(arquivo+".mtl");
-
+    obj_mtl();// relaciona materiais e objetos
 }
 
 #include <time.h>
@@ -40,8 +40,13 @@ void Loading::draw() {
     srand(time(NULL));
     glPushMatrix();
     for(auto& o:obj){
-        glPushMatrix();
         for(auto& m:o.meshs) {
+            glPushMatrix();
+            glMaterialfv(GL_FRONT, GL_AMBIENT, m.mat->Ka);
+            glMaterialfv(GL_FRONT, GL_DIFFUSE, m.mat->Kd);
+            glMaterialfv(GL_FRONT, GL_SPECULAR, m.mat->Ks);
+            glMaterialfv(GL_FRONT, GL_SHININESS, &m.mat->Ns);
+            glMaterialfv(GL_FRONT, GL_EMISSION, m.mat->Ke);
             for(auto& f:m.faces) {
                 //criar cor aleatoria
                 glColor3f(rand()%100/100.0,rand()%100/100.0,rand()%100/100.0);
@@ -56,8 +61,8 @@ void Loading::draw() {
                 glVertex3dv(f.v[2].n);
                 glEnd();
             }
+            glPopMatrix();
         }
-        glPopMatrix();
     }
     glPopMatrix();
 }
@@ -77,25 +82,25 @@ void Loading::load_mtl(string arquivo) {
             mat.resize(mat.size()+1);
             ss >> mat.back().name;
         }
-        else if (buffer == "Ns")
+        else if (buffer == "Ns")// nshiny
         {
             ss >> mat.back().Ns;
         }
-        else if(buffer == "Ka")
+        else if(buffer == "Ka")// luz ambiente
         {
             ss >> mat.back().Ka[0];
             ss >> mat.back().Ka[1];
             ss >> mat.back().Ka[2];
             mat.back().Ka[3] = 1;
         }
-        else if(buffer == "Kd")
+        else if(buffer == "Kd")// luz difusa
         {
             ss >> mat.back().Kd[0];
             ss >> mat.back().Kd[1];
             ss >> mat.back().Kd[2];
             mat.back().Kd[3] = 1;
         }
-        else if(buffer == "Ks")
+        else if(buffer == "Ks")// luz especular
         {
             ss >> mat.back().Ks[0];
             ss >> mat.back().Ks[1];
@@ -109,7 +114,7 @@ void Loading::load_mtl(string arquivo) {
             ss >> mat.back().Ke[2];
             mat.back().Ke[3] = 1;
         }
-        else if (buffer == "map_Kd")
+        else if (buffer == "map_Kd")// textura
         {
             ss >> buffer;
             //mat.back().mapK= new Texture(buffer);
@@ -187,4 +192,12 @@ void Loading::load_obj(string arquivo) {
         }
     }
     ifs.close();
+}
+
+void Loading::obj_mtl() {
+    for(auto& o:obj)
+        for (auto &m:o.meshs)
+            for (auto &mt:mat)
+                if(m.name_mat == mt.name)
+                    m.mat = &mt;
 }
