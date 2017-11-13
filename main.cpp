@@ -73,7 +73,65 @@ public:
     }
 };
 
-Loading *ceu;
+#include <random>
+class Sky : public Loading
+{
+    vector<vec3> particles;
+    double r= 0.02;
+    mt19937 rng;
+public:
+    Sky(string obj) : Loading(obj), rng(time(NULL))
+    {
+        createParticles(-20,20);
+    }
+    void createParticles(double a, double b)
+    {
+//        mt19937 rng(time(NULL));
+        uniform_real_distribution<double> dist(a, b);
+        for(int i=0; i<2000; i++)
+        {
+            particles.emplace_back(dist(rng), dist(rng), dist(rng));
+        }
+    }
+    void draw(vec3 pos)
+    {
+//        glPushMatrix();
+//        glTranslatef(pos.n[0], pos.n[1], pos.n[2]);
+//        glRotatef(pos.norma()*0.1,1,1,1);
+//        Loading::draw();
+//        glPopMatrix();
+
+        uniform_real_distribution<double> dist_x(pos.n[0]-20, pos.n[0]+20),
+                dist_y(pos.n[1]-20, pos.n[1]+20),dist_z(pos.n[2]-20, pos.n[2]+20);
+        for(auto& p : particles)
+        {
+            if((p-pos).norma()>20)
+            {
+                p= vec3(dist_x(rng), dist_y(rng), dist_z(rng));
+                while((p-pos).norma()<5)
+                    p= vec3(dist_x(rng), dist_y(rng), dist_z(rng));
+            }
+        }
+
+        for(auto& p : particles)
+        {
+            glPushMatrix();
+            float k[]= {1,1,1,1};
+            uniform_real_distribution<double> bri(-1,1);
+            float e= bri(rng);
+            float ke[]= {e, e, e, e};
+            glMaterialfv(GL_FRONT, GL_AMBIENT, k);
+            glMaterialfv(GL_FRONT, GL_DIFFUSE, k);
+            glMaterialfv(GL_FRONT, GL_SPECULAR, k);
+            glMaterialfv(GL_FRONT, GL_EMISSION, ke);
+            glTranslatef(p.n[0], p.n[1], p.n[2]);
+            glutSolidSphere(r,5,5);
+            glPopMatrix();
+        }
+    }
+};
+
+Sky *ceu;
 Nave *teste;
 
 float dx = 0, dy = 0, last_x, last_y, zoom= 15;
@@ -128,9 +186,8 @@ void display()
     glutWireSphere(0.5, 20, 16);
     glPopMatrix();
 
-//    sky.draw();
     glPushMatrix();
-    ceu->draw();
+    ceu->draw(vec3(pos_x,pos_y,pos_z));
     glPopMatrix();
 
     glutSwapBuffers();
@@ -293,7 +350,7 @@ int main(int argc, char**argv)
     glEnable(GL_MULTISAMPLE_ARB);
 
     teste= new Nave("nave");
-    ceu= new Loading("sky");
+    ceu= new Sky("sky");
 
     //glClearColor(0,0,0,0);
     glutMainLoop();

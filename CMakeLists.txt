@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(raceGame)
+project(solarsystem)
 
 set(CMAKE_CXX_STANDARD 11)
 

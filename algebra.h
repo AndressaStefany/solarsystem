@@ -2,8 +2,8 @@
 // Created by vitor on 04/11/17.
 //
 
-#ifndef RACEGAME_ALGEBRA_H
-#define RACEGAME_ALGEBRA_H
+#ifndef SOLARSYSTEM_ALGEBRA_H
+#define SOLARSYSTEM_ALGEBRA_H
 
 #include <ostream>
 #include <istream>
@@ -65,4 +65,4 @@ public:
 };
 
 
-#endif //RACEGAME_ALGEBRA_H
+#endif //SOLARSYSTEM_ALGEBRA_H
