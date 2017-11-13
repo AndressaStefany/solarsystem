@@ -177,11 +177,9 @@ void time(int t)
 
 int main(int argc, char**argv)
 {
-    teste= new Loading("nave");
-
     glutInit(&argc, argv);
 
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH | GLUT_MULTISAMPLE);
     glutInitWindowSize(640,480);
     glutInitWindowPosition (100, 100);
     glutCreateWindow("SolarSys");
@@ -194,9 +192,25 @@ int main(int argc, char**argv)
     glutSpecialFunc(specialkeys);
     glutTimerFunc(30,time,0);
 
-    glShadeModel (GL_SMOOTH);
+    glShadeModel(GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_TEXTURE_2D);
+
     glEnable(GL_LIGHTING);
+    glEnable(GL_CULL_FACE);
+    glEnable(GL_LIGHT0);
+    glEnable(GL_LIGHT1);
+    glEnable(GL_LIGHT2);
+    glEnable(GL_LIGHT3);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glAlphaFunc(GL_SRC_ALPHA,0);
+    glEnable(GL_ALPHA_TEST);
+
+    glEnable(GL_MULTISAMPLE_ARB);
+
+    teste= new Loading("nave");
 
     //glClearColor(0,0,0,0);
     glutMainLoop();

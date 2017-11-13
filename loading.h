@@ -9,6 +9,7 @@
 #include <fstream>
 #include <GL/gl.h>
 #include <vector>
+#include "texture.h"
 #include "algebra.h"
 
 using namespace std;
@@ -19,7 +20,7 @@ struct material
 {
     float Ka[4], Kd[4], Ks[4], Ke[4];
     float Ns= 0;
-//    Texture* mapK= NULL, *map_Bump= NULL;
+    Texture* mapK= NULL, *map_Bump= NULL;
     string name;
 };
 struct face

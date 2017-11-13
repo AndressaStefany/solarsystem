@@ -3,7 +3,7 @@ project(raceGame)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES main.cpp loading.cpp algebra.cpp)
+set(SOURCE_FILES main.cpp loading.cpp algebra.cpp texture.cpp)
 add_executable(solar ${SOURCE_FILES})
 
 find_package(OpenGL REQUIRED)

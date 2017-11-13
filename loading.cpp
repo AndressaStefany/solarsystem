@@ -42,6 +42,16 @@ void Loading::draw() {
     for(auto& o:obj){
         for(auto& m:o.meshs) {
             glPushMatrix();
+
+            if(o.name == "Cube.004_Cube.001")
+            {
+                m.mat->Kd[3]= 0.5;
+            }
+
+            if(m.mat->mapK) {
+                glActiveTexture(GL_TEXTURE0);
+                glBindTexture(GL_TEXTURE_2D, m.mat->mapK->getID());
+            }
             glMaterialfv(GL_FRONT, GL_AMBIENT, m.mat->Ka);
             glMaterialfv(GL_FRONT, GL_DIFFUSE, m.mat->Kd);
             glMaterialfv(GL_FRONT, GL_SPECULAR, m.mat->Ks);
@@ -52,15 +62,21 @@ void Loading::draw() {
                 glColor3f(rand()%100/100.0,rand()%100/100.0,rand()%100/100.0);
                 glBegin(GL_TRIANGLES);
                 glNormal3dv(f.n[0].n);
+                glTexCoord2dv(f.t[0].n);
                 glVertex3dv(f.v[0].n);
 
                 glNormal3dv(f.n[1].n);
+                glTexCoord2dv(f.t[1].n);
                 glVertex3dv(f.v[1].n);
 
                 glNormal3dv(f.n[2].n);
+                glTexCoord2dv(f.t[2].n);
                 glVertex3dv(f.v[2].n);
                 glEnd();
             }
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, 0);
+            glPopMatrix();
             glPopMatrix();
         }
     }
@@ -117,7 +133,7 @@ void Loading::load_mtl(string arquivo) {
         else if (buffer == "map_Kd")// textura
         {
             ss >> buffer;
-            //mat.back().mapK= new Texture(buffer);
+            mat.back().mapK= new Texture(buffer);
         }
     }
     ifs.close();
