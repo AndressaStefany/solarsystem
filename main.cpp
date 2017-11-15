@@ -95,12 +95,12 @@ public:
     }
     void draw(vec3 pos)
     {
-//        glPushMatrix();
-//        glTranslatef(pos.n[0], pos.n[1], pos.n[2]);
-//        glRotatef(pos.norma()*0.1,1,1,1);
-//        Loading::draw();
-//        glPopMatrix();
-
+        glPushMatrix();
+        //glTranslatef(pos.n[0], pos.n[1], pos.n[2]);
+        //glRotatef(pos.norma()*0.1,1,1,1);
+        Loading::draw();
+        glPopMatrix();
+        /*
         uniform_real_distribution<double> dist_x(pos.n[0]-20, pos.n[0]+20),
                 dist_y(pos.n[1]-20, pos.n[1]+20),dist_z(pos.n[2]-20, pos.n[2]+20);
         for(auto& p : particles)
@@ -128,11 +128,48 @@ public:
             glutSolidSphere(r,5,5);
             glPopMatrix();
         }
+         */
+    }
+};
+
+class Planet : public Loading{
+    float a, b, t=0, rot;
+public:
+    Planet(string arquivo, vec3 p, float a_, float b_, float rot_):Loading(arquivo)
+    {
+        a = a_;
+        b = b_;
+        rot = rot_;
+    }
+    void draw()
+    {
+        glPushMatrix();
+        for(float x=0; x<t; x+=0.1)
+        {
+            glPushMatrix();
+            glRotatef(x,1,1,0);
+            glTranslatef(2,0,0);
+            glRotatef(-x,1,1,0);
+            glutSolidSphere(0.1,5,5);
+            glPopMatrix();
+        }
+        glPushMatrix();
+        glTranslatef(2,1,0);
+        glutSolidCone(0.5,0.5,10,10);
+        glPopMatrix();
+        glRotatef(t,1,1,0);
+        glTranslatef(2,1,0);
+        glRotatef(-t,1,1,0);
+        Loading::draw();
+        glPopMatrix();
+
+        t+=rot*50;
     }
 };
 
 Sky *ceu;
 Nave *teste;
+Planet *saturn;
 
 float dx = 0, dy = 0, last_x, last_y, zoom= 15;
 int btt[3];
@@ -173,21 +210,25 @@ void display()
     glRotatef(ang_v,1,0,0);
     glRotatef(ang_h,0,1,0);
 
-    glPushMatrix();
-    teste->draw();	//Frente da nave
-    glPopMatrix();
+    glutSolidCube(1);
+    //teste->draw();	//Frente da nave
 
     glPopMatrix();
     
     //Referência
-    glPushMatrix();
+    /*glPushMatrix();
     glTranslatef(0,0,10);
     glColor3f(1,1,0);
     glutWireSphere(0.5, 20, 16);
-    glPopMatrix();
+    glPopMatrix(); */
 
     glPushMatrix();
-    ceu->draw(vec3(pos_x,pos_y,pos_z));
+    //ceu->draw(vec3(pos_x,pos_y,pos_z));
+    glPopMatrix();
+
+    //planeta saturno
+    glPushMatrix();
+    saturn->draw();
     glPopMatrix();
 
     glutSwapBuffers();
@@ -311,7 +352,7 @@ void specialkeys(int key, int x, int y)
 void time(int t)
 {
     glutPostRedisplay();
-    glutTimerFunc(30, time, t);
+    glutTimerFunc(60, time, t);
 }
 
 int main(int argc, char**argv)
@@ -351,6 +392,7 @@ int main(int argc, char**argv)
 
     teste= new Nave("nave");
     ceu= new Sky("sky");
+    saturn = new Planet("saturn", vec3(0,0,0), 1, 2, 0.1);
 
     //glClearColor(0,0,0,0);
     glutMainLoop();
