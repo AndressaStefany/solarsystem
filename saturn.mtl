@@ -1,8 +1,8 @@
-# Blender MTL File: 'saturn.blend'
+# Blender MTL File: 'None'
 # Material Count: 2
 
 newmtl Saturn_Planet
-Ns 7.843137
+Ns 5.882353
 Ka 1.000000 1.000000 1.000000
 Kd 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
@@ -10,17 +10,17 @@ Ke 0.005000 0.005000 0.005000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd saturn/Saturn_Planet.bmp
-map_Ks saturn/Saturn_Planet.bmp
+map_Kd /home/vitor/solarsystem/saturn/Saturn_Planet.bmp
+map_Ks /home/vitor/solarsystem/saturn/Saturn_Planet.bmp
 
 newmtl Saturn_Rings
-Ns 96.078431
+Ns 92.156863
 Ka 1.000000 1.000000 1.000000
 Kd 0.640000 0.640000 0.640000
 Ks 0.500000 0.500000 0.500000
-Ke 0.004000 0.004000 0.004000
+Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 0.000000
 illum 2
-map_Kd saturn/Saturn_Rings.bmp
-map_d saturn/Saturn_Rings.bmp
+map_Kd /home/vitor/solarsystem/saturn/Saturn_Rings.bmp
+map_d /home/vitor/solarsystem/saturn/Saturn_Rings.bmp
