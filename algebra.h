@@ -57,8 +57,10 @@ public:
     friend vec3 operator-(const vec3& a, const vec3& b);
     friend vec3 operator*(const vec3& a, double k);
     friend vec3 operator*(double k, const vec3& a);
+    friend double operator*(const vec3& a, const vec3& b);
     friend vec3 operator/(const vec3& a, double k);
     friend vec3 operator/(double k, const vec3& a);
+    friend vec3 operator^(const vec3&a, const vec3&b);
 
     friend ostream& operator << (ostream& out, vec3& a);
     friend istream& operator >> (istream& in, vec3& a);

@@ -133,37 +133,63 @@ public:
 };
 
 class Planet : public Loading{
-    float a, b, t=0, rot;
+    float a, b, t=0, vang;
+    double angh, angv;
+    vec3 pos; //, axis, per;
+    //double r= 2;
 public:
-    Planet(string arquivo, vec3 p, float a_, float b_, float rot_):Loading(arquivo)
+    Planet(string arquivo, vec3 pos_, float a_, float b_, float vang_,
+           float angh_, float angv_) : Loading(arquivo)
     {
+        t=0;
         a = a_;
         b = b_;
-        rot = rot_;
+        vang = vang_;
+        angh= angh_;
+        angv= angv_;
+        pos= pos_;
+//        axis= vec3(cos(angv)*sin(angh),sin(angv),cos(angv)*cos(angh));
+//        per= (axis^vec3(1,0,0))^axis;
+//        per=per/per.norma()*r;
     }
     void draw()
     {
+        //per= per/per.norma()*r*sqrt(pow(a*cos(t*M_PI/180),2)+pow(b*sin(t*M_PI/180),2));
+        //cout << per.norma() << " " << t << endl;
+        //vec3 x1= per/per.norma(), x2= axis/axis.norma(), x3= x1^x2;
         glPushMatrix();
-        for(float x=0; x<t; x+=0.1)
+        glTranslatef(pos.n[0],pos.n[1],pos.n[2]);
+        for(float x=0; x<t; x+=0.01)
         {
+//            vec3 per_= per;
             glPushMatrix();
-            glRotatef(x,1,1,0);
-            glTranslatef(2,0,0);
-            glRotatef(-x,1,1,0);
-            glutSolidSphere(0.1,5,5);
+//            glRotatef(x,axis.n[0],axis.n[1],axis.n[2]);
+//            glTranslatef(per_.n[0],per_.n[1],per_.n[2]);
+//            glRotatef(-x, axis.n[0], axis.n[1], axis.n[2]);
+            glRotatef(angv,1,0,0);
+            glRotatef(angh,0,1,0);
+            glTranslatef(a*cos(x), b*sin(x), 0);
+            glutSolidSphere(0.1,2,2);
             glPopMatrix();
         }
+
         glPushMatrix();
-        glTranslatef(2,1,0);
-        glutSolidCone(0.5,0.5,10,10);
-        glPopMatrix();
-        glRotatef(t,1,1,0);
-        glTranslatef(2,1,0);
-        glRotatef(-t,1,1,0);
-        Loading::draw();
+        glutSolidSphere(0.3,10,10);
         glPopMatrix();
 
-        t+=rot*50;
+//        glRotatef(t,axis.n[0],axis.n[1],axis.n[2]);
+//        glTranslatef(per.n[0],per.n[1],per.n[2]);
+//        glRotatef(-t,axis.n[0],axis.n[1],axis.n[2]);
+        glRotatef(angv,1,0,0);
+        glRotatef(angh,0,1,0);
+        glTranslatef(a*cos(t), b*sin(t), 0);
+        glRotatef(-angh,0,1,0);
+        glRotatef(-angv,1,0,0);
+        Loading::draw();
+
+        glPopMatrix();
+
+        t+=vang;
     }
 };
 
@@ -392,7 +418,7 @@ int main(int argc, char**argv)
 
     teste= new Nave("nave");
     ceu= new Sky("sky");
-    saturn = new Planet("saturn", vec3(0,0,0), 1, 2, 0.1);
+    saturn = new Planet("saturn", vec3(0,1,0), 2, 1, 0.1, 30, 30);
 
     //glClearColor(0,0,0,0);
     glutMainLoop();

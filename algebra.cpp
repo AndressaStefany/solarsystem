@@ -97,6 +97,16 @@ double vec3::norma() {
     return sqrt(n[0]*n[0]+n[1]*n[1]+n[2]*n[2]);
 }
 
+vec3 operator^(const vec3 &a, const vec3 &b) {
+    return vec3(a.n[1]*b.n[2] - a.n[2]*b.n[1],
+         a.n[2]*b.n[0] - a.n[0]*b.n[2],
+         a.n[0]*b.n[1] - a.n[1]*b.n[0]);
+}
+
+double operator*(const vec3 &a, const vec3 &b) {
+    return a.n[0]*b.n[0]+a.n[1]*b.n[1]+a.n[2]*b.n[2];
+}
+
 
 vec2::vec2(double x, double y) {
     n[0]= x;

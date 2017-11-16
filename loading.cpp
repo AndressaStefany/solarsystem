@@ -67,7 +67,6 @@ void Loading::draw() {
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, 0);
             glPopMatrix();
-            glPopMatrix();
         }
     }
     glPopMatrix();
