@@ -25,12 +25,6 @@ Ship *nave;
 Planet *sun, *venus, *terra, *jupiter, *saturn, *neptune;
 Camera *cam;
 
-//float pos_x = 0, speed_x = 0;
-//float pos_y = 0, speed_y = 0;
-//float pos_z = 0, speed_z = 0;
-//const float max_speed = 0.1, acceleration = 0.01;
-//float ang_v = 0, ang_h = 0;
-
 void reshape(int w, int h)
 {
     glViewport(0,0,w,h);
@@ -46,10 +40,6 @@ void reshape(int w, int h)
 void display()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//    pos_x += speed_x;
-//    pos_y += speed_y;
-//    pos_z += speed_z;
-
     // Camera
 //    cam->follow(nave->getPos());
     cam->posiciona();
@@ -82,7 +72,6 @@ void display()
     glEnd();
     glPopMatrix();
     glEnable(GL_LIGHTING);
-
 
     // Planetas
     venus->draw();
