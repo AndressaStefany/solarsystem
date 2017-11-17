@@ -14,6 +14,7 @@
 #include "planet.h"
 #include "ship.h"
 #include "sky.h"
+#include "interface.h"
 
 using namespace std;
 
@@ -24,12 +25,7 @@ Sky *ceu;
 Ship *nave;
 Planet *sun, *venus, *terra, *jupiter, *saturn, *neptune;
 Camera *cam;
-
-//float pos_x = 0, speed_x = 0;
-//float pos_y = 0, speed_y = 0;
-//float pos_z = 0, speed_z = 0;
-//const float max_speed = 0.1, acceleration = 0.01;
-//float ang_v = 0, ang_h = 0;
+Interface *interface;
 
 void reshape(int w, int h)
 {
@@ -46,12 +42,13 @@ void reshape(int w, int h)
 void display()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//    pos_x += speed_x;
-//    pos_y += speed_y;
-//    pos_z += speed_z;
 
     // Camera
-//    cam->follow(nave->getPos());
+    //cam->follow(nave->getPos());
+	glLoadIdentity();
+    glTranslated(0,0,-10);
+	//interface->debugPoints();
+	interface->drawBox(1, 1, 255, 255, 255);	//VER
     cam->posiciona();
 
     // Nave
@@ -81,9 +78,9 @@ void display()
     }
     glEnd();
     glPopMatrix();
-    glEnable(GL_LIGHTING);
-
-
+	
+	glEnable(GL_LIGHTING);
+	
     // Planetas
     venus->draw();
     sun->draw();
@@ -91,7 +88,7 @@ void display()
     jupiter->draw();
     saturn->draw();
     neptune->draw();
-
+    
     glutSwapBuffers();
 }
 
@@ -169,15 +166,16 @@ int main(int argc, char**argv)
 
     glEnable(GL_MULTISAMPLE_ARB);
 
-    cam= new Camera(vec3(0,0,0));
-    nave= new Ship("objetos/nave", vec3(10,0,0), vec3(0,0,0));
-    ceu= new Sky("objetos/sky");
-    sun= new Planet("objetos/planetas/sun", vec3(0,0,0), 0, 0, 0, 0, 0);
-    venus= new Planet("objetos/planetas/venus", vec3(0,0,0), 9, 6, 0.1, 120, 67);
-    terra= new Planet("objetos/planetas/terra", vec3(0,0,0), 12, 10, 0.1, 50, 80);
-    jupiter= new Planet("objetos/planetas/jupiter", vec3(0,0,0), 15, 15, 0.1, 80, 30);
-    saturn= new Planet("objetos/planetas/saturn", vec3(0,0,0), 18, 10, 0.1, -30, -120);
-    neptune= new Planet("objetos/planetas/neptune", vec3(0,0,0), 20, 25, 0.1, 20,-50);
+    cam = new Camera(vec3(0,0,0));
+    nave = new Ship("objetos/nave", vec3(10,0,0), vec3(0,0,0));
+    ceu = new Sky("objetos/sky");
+    sun = new Planet("objetos/planetas/sun", vec3(0,0,0), 0, 0, 0, 0, 0);
+    venus = new Planet("objetos/planetas/venus", vec3(0,0,0), 9, 6, 0.1, 120, 67);
+    terra = new Planet("objetos/planetas/terra", vec3(0,0,0), 12, 10, 0.1, 50, 80);
+    jupiter = new Planet("objetos/planetas/jupiter", vec3(0,0,0), 15, 15, 0.1, 80, 30);
+    saturn = new Planet("objetos/planetas/saturn", vec3(0,0,0), 18, 10, 0.1, -30, -120);
+    neptune = new Planet("objetos/planetas/neptune", vec3(0,0,0), 20, 25, 0.1, 20,-50);
+	interface = new Interface();
 
     glClearColor(0,0,0,0);
     glutMainLoop();
