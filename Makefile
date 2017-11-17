@@ -4,13 +4,13 @@ CPPFLAGS = -Wall -std=c++11
 CFLAGS =
 LDFLAGS = -O2 -lGL -lGLU -lglut
 
-FILES = algebra.o texture.o loading.o planet.o camera.o ship.o sky.o main.o
+FILES = algebra.o texture.o loading.o planet.o camera.o ship.o sky.o interface.o main.o
 
 
 all: main
 
 main: ${FILES}
-	$(CC) $(CFLAGS) algebra.o texture.o loading.o planet.o camera.o ship.o sky.o main.o $(LDFLAGS) -o $@
+	$(CC) $(CFLAGS) algebra.o texture.o loading.o planet.o camera.o ship.o sky.o interface.o main.o $(LDFLAGS) -o $@
 
 main.o: main.cpp
 
@@ -28,6 +28,8 @@ ship.o: ship.h ship.cpp loading.o
 
 sky.o: sky.h sky.cpp loading.o
 
+interface.o: interface.h interface.cpp
+
 ##### SPECIAL TARGETS ######
 
 .PHONY: clean realclean
@@ -37,3 +39,4 @@ clean:
 
 realclean: clean
 	-rm -f main
+
