@@ -6,9 +6,10 @@
 #define RACEGAME_TEXTURE_H
 
 
+#pragma once
 #include <GL/gl.h>
-#include <stdio.h>
-#include <string.h>
+#include <cstring>
+#include <cstdio>
 #include <string>
 
 using namespace std;
@@ -17,10 +18,10 @@ class Texture
 {
     unsigned int textureID;
 public:
-    Texture(string name);
+    explicit Texture(string name);
     ~Texture();
     void loadBMP(string name);
-    void setTexture(void* data, int w, int h, int format);
+    void setTexture(void* data, int w, int h, GLenum format);
     unsigned int getID() const { return textureID; }
 };
 

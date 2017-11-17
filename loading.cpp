@@ -3,7 +3,6 @@
 //
 
 #include "loading.h"
-#include <sstream>
 
 vector<string> split(string name, char limite)
 {
@@ -48,8 +47,6 @@ void Loading::draw() {
             glMaterialfv(GL_FRONT, GL_SHININESS, &m.mat->Ns);
             glMaterialfv(GL_FRONT, GL_EMISSION, m.mat->Ke);
             for(auto& f:m.faces) {
-                //criar cor aleatoria
-                glColor3f(rand()%100/100.0,rand()%100/100.0,rand()%100/100.0);
                 glBegin(GL_TRIANGLES);
                 glNormal3dv(f.n[0].n);
                 glTexCoord2dv(f.t[0].n);
@@ -122,7 +119,13 @@ void Loading::load_mtl(string arquivo) {
         else if (buffer == "map_Kd")// textura
         {
             ss >> buffer;
-            mat.back().mapK= new Texture(buffer);
+            string path;
+            unsigned long p= arquivo.find_last_of('/');
+            if(p != string::npos)
+            {
+                path= arquivo.substr(0,p+1);
+            }
+            mat.back().mapK= new Texture(path+buffer);
         }
     }
     ifs.close();
@@ -185,7 +188,7 @@ void Loading::load_obj(string arquivo) {
                 aux = split(x[i], '/');
                 int d = stoi(aux[0]) - 1;
                 f.v[i] = vertices[d];
-                if(aux[1]!="") {
+                if(!aux[1].empty()) {
                     d = stoi(aux[1]) - 1;
                     f.t[i] = texturas[d];
                 }

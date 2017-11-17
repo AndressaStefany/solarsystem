@@ -5,11 +5,13 @@
 #ifndef SOLARSYSTEM_LOADING_H
 #define SOLARSYSTEM_LOADING_H
 
-#include <iostream>
-#include <fstream>
+#pragma once
 #include <GL/gl.h>
+#include <fstream>
+#include <sstream>
 #include <math.h>
 #include <vector>
+
 #include "texture.h"
 #include "algebra.h"
 

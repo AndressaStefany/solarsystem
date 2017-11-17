@@ -5,12 +5,28 @@
 #ifndef SOLARSYSTEM_CAMERA_H
 #define SOLARSYSTEM_CAMERA_H
 
+#pragma once
 
+#include <GL/glut.h>
+#include <map>
+#include "loading.h"
 
-class camera {
+extern char keys[255];
+extern map<int,bool> spkeys;
 
+class Camera
+{
+    vec3 pos, dir;
+    double dx= 0, dy= 0, last_x= 0, last_y= 0, zoom= 0;
+    int btt[3]= {0,0,0};
+public:
+    explicit Camera(vec3 ini_pos);
+    void mouse(int button, int state, int x, int y);
+    void motion(int x, int y);
+    void update();
+    void follow(vec3 f);
+    void posiciona();
 };
-
 
 
 #endif //SOLARSYSTEM_CAMERA_H

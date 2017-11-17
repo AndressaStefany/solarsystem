@@ -3,7 +3,7 @@ project(solarsystem)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES main.cpp loading.cpp algebra.cpp texture.cpp)
+set(SOURCE_FILES main.cpp loading.cpp algebra.cpp texture.cpp sky.cpp ship.cpp planet.cpp camera.cpp)
 add_executable(solar ${SOURCE_FILES})
 
 find_package(OpenGL REQUIRED)

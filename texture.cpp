@@ -4,7 +4,6 @@
 
 #include "texture.h"
 
-
 Texture::Texture(string name) {
     loadBMP(name);
 }
@@ -90,7 +89,7 @@ void Texture::loadBMP(string name)
     delete[] data;
 }
 
-void Texture::setTexture(void* data, int w, int h, int format)
+void Texture::setTexture(void* data, int w, int h, GLenum format)
 {
     glGenTextures(1, &textureID);
     glBindTexture(GL_TEXTURE_2D, textureID);
