@@ -1,7 +1,7 @@
 # Blender MTL File: 'None'
 # Material Count: 1
 
-newmtl jupiter_mat
+newmtl jupiter_mat.001
 Ns 5.882353
 Ka 1.000000 1.000000 1.000000
 Kd 1.000000 1.000000 1.000000
