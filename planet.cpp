@@ -9,8 +9,8 @@ float angh_, float angv_) : Loading(arquivo)
 {
     a = a_;
     b = b_;
-    vtranslation = vtranslation_;
-    vrotation= vrotation_;
+    vtranslation = (vtranslation_!=0)?((2*M_PI)/vtranslation_):0;
+    vrotation= (vrotation_!=0)?(360.0/vrotation_):0;//vrotation_/vtranslation_*2*M_PI;
     angh= angh_;
     angv= angv_;
     pos= pos_;
@@ -21,20 +21,20 @@ void Planet::genTrajectoryList()
     trajectoryList = glGenLists(1);
     if(trajectoryList == 0)
         throw "Erro on generating list";
+    double x;
     glNewList(trajectoryList, GL_COMPILE);
     glPushMatrix();
     glColor3f(1,1,1);
-    double x;
-    for(int i=0; i<2000; i++)
+    glRotated(angv,1,0,0);
+    glRotated(angh,0,1,0);
+    glLineWidth(2);
+    glBegin(GL_LINE_LOOP);
+    for(int i=0; i<200; i++)
     {
-        x=i/2000.0*M_PI*2;
-        glPushMatrix();
-        glRotated(angv,1,0,0);
-        glRotated(angh,0,1,0);
-        glTranslated(a*cos(x), b*sin(x), 0);
-        glutSolidSphere(0.5,2,2);
-        glPopMatrix();
+        x=i/200.0*M_PI*2;
+        glVertex3f(a*cos(x), b*sin(x), 0);
     }
+    glEnd();
     glPopMatrix();
     glEndList();
 }
@@ -62,6 +62,6 @@ void Planet::draw()
 void Planet::update(double delta_time) {
     t1+=vtranslation*delta_time;
     t2+=vrotation*delta_time;
-    t1= fmod(t1, 360);
+    t1= fmod(t1, 2*M_PI);
     t2= fmod(t2, 360);
 }
