@@ -5,6 +5,7 @@
 #ifndef SOLARSYSTEM_ALGEBRA_H
 #define SOLARSYSTEM_ALGEBRA_H
 
+#pragma once
 #include <ostream>
 #include <istream>
 #include <math.h>

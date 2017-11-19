@@ -19,12 +19,13 @@ class Camera
     vec3 pos, dir;
     double dx= 0, dy= 0, last_x= 0, last_y= 0, zoom= 0;
     int btt[3]= {0,0,0};
+    const double speed= 100;
 public:
     explicit Camera(vec3 ini_pos);
     void mouse(int button, int state, int x, int y);
     void motion(int x, int y);
-    void update();
-    void follow(vec3 f);
+    void update(double delta_time);
+    void follow(vec3 f, vec2 ang);
     void posiciona();
 };
 

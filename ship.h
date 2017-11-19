@@ -17,13 +17,17 @@ class Ship : public Loading
 {
     vec3 pos, speed;
     bool open= false;
-    float ang_v = 0, ang_h = 0;
-    const float max_speed = 0.1, acceleration = 0.01;
+    float ang_v = 0, ang_h = 0, ang_cabin= 0, sp= 0;
+    const float max_speed = 10, acceleration = 0.1, turn_speed= 45;
+    GLuint listCabin;
+    vec3 cabinCentroid;
+    void generateList();
 public:
     Ship(string obj, vec3 pos_, vec3 speed_);
     vec3 getPos();
+    vec2 getAng();
     void draw();
-    void update();
+    void update(double delta_time);
 };
 
 

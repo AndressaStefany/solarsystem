@@ -26,7 +26,6 @@ void Sky::draw(vec3 pos)
 
     if(particles_enable)
     {
-
         uniform_real_distribution<double> dist_x(pos.n[0]-20, pos.n[0]+20),
                 dist_y(pos.n[1]-20, pos.n[1]+20),dist_z(pos.n[2]-20, pos.n[2]+20);
         for(auto& p : particles)

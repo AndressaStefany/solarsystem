@@ -3,7 +3,8 @@ project(solarsystem)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES main.cpp loading.cpp algebra.cpp texture.cpp sky.cpp ship.cpp planet.cpp camera.cpp)
+set(SOURCE_FILES main.cpp loading.cpp algebra.cpp
+        texture.cpp sky.cpp ship.cpp planet.cpp camera.cpp interface.cpp)
 add_executable(solar ${SOURCE_FILES})
 
 find_package(OpenGL REQUIRED)
@@ -15,3 +16,4 @@ include_directories(${OPENGL_INCLUDE_DIRS}  ${GLUT_INCLUDE_DIRS} )
 target_link_libraries(solar ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} )
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")

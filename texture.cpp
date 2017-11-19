@@ -15,6 +15,7 @@ Texture::~Texture() {
 void Texture::loadBMP(string name)
 {
     FILE *fp;
+    size_t ret= 0;
 
     fp= fopen(name.c_str(), "r");
     if(!fp)
@@ -23,7 +24,7 @@ void Texture::loadBMP(string name)
         //fclose(fp);
     }
     char* heardField= new char[2];
-    fread(heardField, 2, sizeof(char), fp);
+    ret= fread(heardField, 2, sizeof(char), fp);
     if(heardField[0] != 'B' || heardField[1] != 'M')
     {
         fclose(fp);
@@ -40,16 +41,16 @@ void Texture::loadBMP(string name)
     unsigned short bitsPerPixel;
     unsigned int compressionMethod;
 
-    fseek(fp, 0x000a, SEEK_SET);
-    fread(&bmpDataLocation, 1, sizeof(unsigned int), fp);
+    ret= fseek(fp, 0x000a, SEEK_SET);
+    ret= fread(&bmpDataLocation, 1, sizeof(unsigned int), fp);
 
-    fseek(fp, 0x0012, SEEK_SET);
-    fread(&width, 1, sizeof(unsigned int), fp);
-    fread(&height, 1, sizeof(unsigned int), fp);
-    fread(&numColorPlanes, 1, sizeof(unsigned short), fp);
-    fread(&bitsPerPixel, 1, sizeof(unsigned short), fp);
-    fread(&compressionMethod, 1, sizeof(unsigned int), fp);
-    fread(&dataSize, 1, sizeof(unsigned int), fp);
+    ret= fseek(fp, 0x0012, SEEK_SET);
+    ret= fread(&width, 1, sizeof(unsigned int), fp);
+    ret= fread(&height, 1, sizeof(unsigned int), fp);
+    ret= fread(&numColorPlanes, 1, sizeof(unsigned short), fp);
+    ret= fread(&bitsPerPixel, 1, sizeof(unsigned short), fp);
+    ret= fread(&compressionMethod, 1, sizeof(unsigned int), fp);
+    ret= fread(&dataSize, 1, sizeof(unsigned int), fp);
 
     if(numColorPlanes != 1 || bitsPerPixel != 24 || compressionMethod != 0)
     {
@@ -59,7 +60,11 @@ void Texture::loadBMP(string name)
 
     data= new unsigned char[dataSize];
     fseek(fp, bmpDataLocation, SEEK_SET);
-    fread(data, dataSize, sizeof(unsigned char), fp);
+    ret= fread(data, dataSize, sizeof(unsigned char), fp);
+
+    if(ret == 0)
+        throw "Erro reading the file";
+
     fclose(fp);
 
     // inverte as cores  B G R || R G B

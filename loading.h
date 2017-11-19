@@ -66,15 +66,17 @@ struct object
 };
 
 class Loading {
-public:
-    Loading(string arquivo);
-    virtual void draw();
 protected:
+    GLuint objList;
     vector<object> obj;
     vector<material> mat;
     void load_obj(string arquivo);
     void load_mtl(string arquivo);
     void obj_mtl();
+    virtual void generateList();
+public:
+    Loading(string arquivo);
+    virtual void draw();
 };
 
 
