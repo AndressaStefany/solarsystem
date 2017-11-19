@@ -28,6 +28,7 @@ public:
     vec2 getAng();
     void draw();
     void update(double delta_time);
+    friend class Camera;
 };
 
 

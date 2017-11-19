@@ -10,6 +10,8 @@
 #include <GL/glut.h>
 #include <map>
 #include "loading.h"
+#include "ship.h"
+#include "planet.h"
 
 extern char keys[255];
 extern map<int,bool> spkeys;
@@ -17,15 +19,20 @@ extern map<int,bool> spkeys;
 class Camera
 {
     vec3 pos, dir;
-    double dx= 0, dy= 0, last_x= 0, last_y= 0, zoom= 0;
+    double dx, dy, last_x= 0, last_y= 0, zoom= 0;
     int btt[3]= {0,0,0};
     const double speed= 100;
+    Planet* follow_planet= nullptr;
+    Ship* follow_ship= nullptr;
+    bool free_cam= true;
 public:
-    explicit Camera(vec3 ini_pos);
+    explicit Camera(vec3 ini_pos, double angh, double angv);
     void mouse(int button, int state, int x, int y);
     void motion(int x, int y);
     void update(double delta_time);
-    void follow(vec3 f, vec2 ang);
+    void setFollow(Ship* x, double zoom);
+    void setFollow(Planet* x, double zoom);
+    void setFree();
     void posiciona();
 };
 
