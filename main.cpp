@@ -249,23 +249,23 @@ int main(int argc, char**argv)
         cam = new Camera(vec3(-700,0,0), 0, 0);
         nave = new Ship("objetos/nave", vec3(0,0,500), vec3(0,0,0));
         ceu = new Sky("objetos/sky");
-        sun = new Planet("objetos/planets/sun", vec3(0,0,0), 0, 0, 0, 0, 0, 0, 0);
+        sun = new Planet("objetos/planets/sun", vec3(0,0,0), 0, 0, 0, 0, 0, 0, 7.25);
         mercury  = new Planet("objetos/planets/mercury",
-                              vec3(0,0,0), 400*1, 400*700/460.0, 88, 59, 0, 90, 7);
+                              vec3(0,0,0), 400*1, 400*700/460.0, 88, 59, 0, 90-6.34, 0.01);
         venus    = new Planet("objetos/planets/venus",
-                              vec3(0,0,0), 1000*1, 1000*1009/1007.0, 225, 243, 0, 90, 177);
+                              vec3(0,0,0), 1000*1, 1000*1009/1007.0, 225, 243, 0, 90-2.19, 177.36);
         earth    = new Planet("objetos/planets/earth",
-                              vec3(0,0,0), 1500*1, 1500*1520/1470.0, 365, 1, 0, 90, 23.5);
+                              vec3(0,0,0), 1500*1, 1500*1520/1470.0, 365, 1, 0, 90-1.57, 23.44);
         mars     = new Planet("objetos/planets/mars",
-                              vec3(0,0,0), 2000*1, 2000*2490/2050.0, 687, 1, 0, 90, 25);
+                              vec3(0,0,0), 2000*1, 2000*2490/2050.0, 687, 1, 0, 90-1.67, 25.19);
         jupiter  = new Planet("objetos/planets/jupiter",
-                              vec3(0,0,0), 2500*1, 2500*8170/7410.0, 4329/3.0, 0.4, 0, 90, 3);
+                              vec3(0,0,0), 2500*1, 2500*8170/7410.0, 4329/3.0, 0.4, 0, 90-0.32, 3.12);
         saturn   = new Planet("objetos/planets/saturn",
-                              vec3(0,0,0), 3000*1, 3000*15100/13500.0, 10751/4.5, 0.43, 0, 90, 27);
+                              vec3(0,0,0), 3000*1, 3000*15100/13500.0, 10751/4.5, 0.43, 0, 90-0.93, 26.73);
         uranus   = new Planet("objetos/planets/uranus",
-                              vec3(0,0,0), 3500*1, 3500*30000/27500.0, 30660/7.9, 0.76, 0, 90, 98);
+                              vec3(0,0,0), 3500*1, 3500*30000/27500.0, 30660/7.9, 0.76, 0, 90-1.02, 97.77);
         neptune  = new Planet("objetos/planets/neptune",
-                              vec3(0,0,0), 4000*1, 4000*45500/44500.0, 59860/11.125, 6.39, 0, 90, 30);
+                              vec3(0,0,0), 4000*1, 4000*45500/44500.0, 59860/11.125, 6.39, 0, 90-0.72, 28.33);
         interface = new Interface(1,1,1);
     } catch(const char* erro)
     {
