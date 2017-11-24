@@ -112,6 +112,22 @@ void Ship::update(double delta_time)
     {
         ang_h -= turn_speed*delta_time;
     }
+    if(ang_v >= 360)
+    {
+        ang_v -= 360;
+    }
+    if(ang_v < 0)
+    {
+        ang_v += 360;
+    }
+    if(ang_h >= 360)
+    {
+        ang_h -= 360;
+    }
+    if(ang_h < 0)
+    {
+        ang_h += 360;
+    }
 
     pos+=dir*sp*delta_time;
 }
