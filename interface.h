@@ -17,13 +17,12 @@ using namespace std;
 
 class Interface {
 public:
-	char buffer[20]={'\0'};
-
-	Interface();
-    void debugPoints();
-	void displayTextSmall(float x, float y, int r, int g, int b, const char *string);
-	void displayTextMedium(float x, float y, int r, int g, int b, const char *string);
-	void displayTextLarge(float x, float y, int r, int g, int b, const char *string);
+	int red, green, blue;
+	Interface(int r, int g, int b);
+	void debugPoints();
+	void displayTextSmall(float x, float y, const char *string);
+	void displayTextMedium(float x, float y, const char *string);
+	void displayTextLarge(float x, float y, const char *string);
 	void drawInterface(int fps, double animation_speed, Ship* nave);
 	void drawBox(float w, float h, int r, int g, int b);
 };
