@@ -19,11 +19,11 @@
 using namespace std;
 using namespace chrono;
 
-int fps= 0;
+int fps = 0;
 char keys[255];
 map<int,bool> spkeys;
-GLfloat light_position[] = { 0, 0, 0, 1 }, light_ambient[]= {200.0,200.0,200.0,200};
-double animation_speed= 1;
+GLfloat light_position[] = {0, 0, 0, 1}, light_ambient[]= {200.0, 200.0, 200.0, 200};
+double animation_speed = 1;
 
 Sky *ceu;
 Ship *nave;
@@ -53,10 +53,10 @@ void display()
     glTranslated(0,0,-10);
 	//interface->debugPoints();
     glDisable(GL_LIGHTING);
-    interface->displayText(-3,2,1,0,0,("FPS "+to_string(fps)).c_str());
-    glEnable(GL_LIGHTING);
-//	interface->drawBox(1, 1, 255, 255, 255);	//VER
+	interface->drawInterface(fps, animation_speed, nave);
+	glEnable(GL_LIGHTING);
     cam->posiciona();
+	//interface->drawBox(1000, 1000, 255, 255, 255);	//VER
     // Posiciona a luz
     glLightfv(GL_LIGHT0, GL_POSITION, light_position);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, light_ambient);
@@ -90,22 +90,69 @@ void motion(int x, int y)
 
 void keyboardUp(unsigned char key, int x, int y)
 {
-    keys[key]= false;
+    keys[key] = false;
 }
 
 void keyboard(unsigned char key, int x, int y)
 {
-    keys[key]= true;
+    keys[key] = true;
+	
+	if(keys['e'])
+	{
+		if(animation_speed == 100.0)
+			animation_speed = 1000.0;
+		if(animation_speed == 50.0)
+			animation_speed = 100.0;
+		if(animation_speed == 20.0)
+			animation_speed = 50.0;
+		if(animation_speed == 10.0)
+			animation_speed = 20.0;
+		if(animation_speed == 5.0)
+			animation_speed = 10.0;
+		if(animation_speed == 2.0)
+			animation_speed = 5.0;
+		if(animation_speed == 1.0)
+			animation_speed = 2.0;
+		if(animation_speed == 0.5)
+			animation_speed = 1.0;
+		if(animation_speed == 0.1)
+			animation_speed = 0.5;
+		if(animation_speed == 0.01)
+			animation_speed = 0.1;
+	}
+    if(keys['r'])
+	{
+		if(animation_speed == 0.1)
+			animation_speed = 0.01;
+		if(animation_speed == 0.5)
+			animation_speed = 0.1;
+		if(animation_speed == 1.0)
+			animation_speed = 0.5;
+		if(animation_speed == 2.0)
+			animation_speed = 1.0;
+		if(animation_speed == 5.0)
+			animation_speed = 2.0;
+		if(animation_speed == 10.0)
+			animation_speed = 5.0;
+		if(animation_speed == 20.0)
+			animation_speed = 10.0;
+		if(animation_speed == 50.0)
+			animation_speed = 20.0;
+		if(animation_speed == 100.0)
+			animation_speed = 50.0;
+		if(animation_speed == 1000.0)
+			animation_speed = 100.0;
+	}
 }
 
 void specialkeysUp(int key, int x, int y)
 {
-    spkeys[key]= false;
+    spkeys[key] = false;
 }
 
 void specialkeys(int key, int x, int y)
 {
-    spkeys[key]= true;
+    spkeys[key] = true;
 }
 
 void time(int t)
@@ -116,9 +163,9 @@ void time(int t)
 
 void idle()
 {
-    static int cont= 0;
-    static auto last_time= high_resolution_clock::now();
-    static double total=0, delta_time= 0;
+    static int cont = 0;
+    static auto last_time = high_resolution_clock::now();
+    static double total = 0, delta_time = 0;
     delta_time= duration_cast<microseconds>(high_resolution_clock::now()-last_time).count();
     last_time= high_resolution_clock::now();
     total+=delta_time;
@@ -153,8 +200,8 @@ void idle()
     if(keys['f']) cam->setFree();
     if(keys['n']) cam->setFollow(nave, 10);
 
-    if(keys['e']) animation_speed+=delta_time;
-    if(keys['r']) animation_speed-=delta_time;
+    //if(keys['e']) animation_speed+=delta_time;
+    //if(keys['r']) animation_speed-=delta_time;
     glutPostRedisplay();
 }
 
