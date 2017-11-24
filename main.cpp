@@ -266,7 +266,7 @@ int main(int argc, char**argv)
                               vec3(0,0,0), 3500*1, 3500*30000/27500.0, 30660/7.9, 0.76, 0, 90, 98);
         neptune  = new Planet("objetos/planets/neptune",
                               vec3(0,0,0), 4000*1, 4000*45500/44500.0, 59860/11.125, 6.39, 0, 90, 30);
-        interface = new Interface();
+        interface = new Interface(1,1,1);
     } catch(const char* erro)
     {
         cerr << erro << endl;
