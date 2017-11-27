@@ -245,7 +245,7 @@ int main(int argc, char**argv)
     glEnable(GL_MULTISAMPLE_ARB);
 
     try {
-        float k= 500;
+        float k = 500;
         cam = new Camera(vec3(-700,0,0), 0, 0);
         nave = new Ship("objetos/nave", vec3(0,0,500), vec3(0,0,0));
         ceu = new Sky("objetos/sky");

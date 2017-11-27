@@ -71,7 +71,7 @@ void Interface::drawInterface(int fps, double animation_speed, Ship* nave) {
 	//Bottom Interface
 	//Left - Angle Data
 	displayTextLarge(-3.125,-2,("Ship Orientation"));
-	displayTextMedium(-3.0,-2.25,("Vertical: "+to_string((int)nave->getAng()[0])+" degrees").c_str());
+	displayTextMedium(-3.0,-2.25,("Vertical: "+to_string(((-1)*(int)nave->getAng()[0])+360)+" degrees").c_str());
 	displayTextMedium(-3.0,-2.5,("Horizontal: "+to_string((int)nave->getAng()[1])+" degrees").c_str());
 	//Middle - Position Data
 	displayTextLarge(-0.5,-2,("Ship Position"));
@@ -79,9 +79,12 @@ void Interface::drawInterface(int fps, double animation_speed, Ship* nave) {
 	displayTextMedium(-0.25,-2.375,("Y-Axis: "+to_string((int)nave->getPos()[1])).c_str());
 	displayTextMedium(0.75,-2.375,("Z-Axis: "+to_string((int)nave->getPos()[2]-500)).c_str());
 	//Right - Body Data
-	displayTextLarge(2.0,-2,("Nearest Body"));
-	displayTextMedium(2.5,-2.25,("???"));
-	displayTextMedium(2.125,-2.5,("Distance: ???"));
+	displayTextLarge(2.0,-2,("Speed"));
+	displayTextMedium(1.885,-2.25,(to_string(nave->getSpeed()[0])+" s.u.").c_str());
+	if(nave->getSpeed()[0] >= nave->getSpeed()[1])
+		displayTextMedium(1.75,-2.5,("Max speed reached!"));
+	if(nave->getSpeed()[0] <= 0)
+		displayTextMedium(1.75,-2.5,("Ship is not moving!"));
 }
 void Interface::drawBox(float w, float h, int r, int g, int b) {
 	glColor3f(r, g, b);

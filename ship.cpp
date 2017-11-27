@@ -14,9 +14,15 @@ vec3 Ship::getPos()
 {
     return pos;
 }
-vec2 Ship::getAng() {
+vec2 Ship::getAng()
+{
     return vec2(ang_v, ang_h);
 }
+vec2 Ship:: getSpeed()
+{
+	return vec2(sp, max_speed);
+}
+
 void Ship::draw()
 {
     glPushMatrix();
@@ -54,6 +60,8 @@ void Ship::update(double delta_time)
     if(keys['z'] || keys['Z'])
     {
         sp+=acceleration;
+		if(sp > max_speed)
+			sp = max_speed;
 //        speed.n[0] += acceleration*sin(ang_h);
 //        speed.n[1] += -acceleration*sin(ang_v);
 //        speed.n[2] += (acceleration*cos(ang_v) + acceleration*cos(ang_h));
@@ -70,6 +78,8 @@ void Ship::update(double delta_time)
     if(keys['x'] || keys['X'])
     {
         sp-=acceleration;
+		if(sp < 0)
+			sp = 0;
 //        if (speed.n[0] >= 0) {
 //            speed.n[0] -= acceleration*sin(ang_h);
 //        } else {
@@ -98,19 +108,19 @@ void Ship::update(double delta_time)
 
     if(spkeys[GLUT_KEY_UP])
     {
-        ang_v += turn_speed*delta_time;
+        ang_v -= 1;
     }
     if(spkeys[GLUT_KEY_DOWN])
     {
-        ang_v -= turn_speed*delta_time;
+        ang_v += 1;
     }
     if(spkeys[GLUT_KEY_LEFT])
     {
-        ang_h += turn_speed*delta_time;
+        ang_h += 1;
     }
     if(spkeys[GLUT_KEY_RIGHT])
     {
-        ang_h -= turn_speed*delta_time;
+        ang_h -= 1;
     }
     if(ang_v >= 360)
     {
