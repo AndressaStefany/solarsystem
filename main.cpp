@@ -253,7 +253,7 @@ int main(int argc, char**argv)
         mercury  = new Planet("objetos/planets/mercury",
                               vec3(0,0,0), 400*1, 400*700/460.0, 88, 58.65, 0, 90-6.34, 0.01);
         venus    = new Planet("objetos/planets/venus",
-                              vec3(0,0,0), 1000*1, 1000*1009/1007.0, 225, 243.03, 0, 90-2.19, 177.36); //-243.03!
+                              vec3(0,0,0), 1000*1, 1000*1009/1007.0, 225, -243.03, 0, 90-2.19, 177.36);
         earth    = new Planet("objetos/planets/earth",
                               vec3(0,0,0), 1500*1, 1500*1520/1470.0, 365, 1.00, 0, 90-1.57, 23.44);
         mars     = new Planet("objetos/planets/mars",
@@ -263,11 +263,11 @@ int main(int argc, char**argv)
         saturn   = new Planet("objetos/planets/saturn",
                               vec3(0,0,0), 3000*1, 3000*15100/13500.0, 10751/4.5, 0.45, 0, 90-0.93, 26.73);
         uranus   = new Planet("objetos/planets/uranus",
-                              vec3(0,0,0), 3500*1, 3500*30000/27500.0, 30660/7.9, 0.76, 0, 90-1.02, 97.77); //-0.76!
+                              vec3(0,0,0), 3500*1, 3500*30000/27500.0, 30660/7.9, -0.76, 0, 90-1.02, 97.77);
         neptune  = new Planet("objetos/planets/neptune",
                               vec3(0,0,0), 4000*1, 4000*45500/44500.0, 59860/11.125, 0.67, 0, 90-0.72, 28.33);
-	/*pluto  = new Planet("objetos/planets/pluto",
-                              vec3(0,0,0), 4000*1, 4000*45500/44500.0, 90520/11.125, 6.39, 0, 90-0.72, 28.33); //-6.39!*/
+		/*pluto  = new Planet("objetos/planets/pluto",
+                              vec3(0,0,0), 4000*1, 4000*45500/44500.0, 90520/11.125, -6.39, 0, 90-0.72, 28.33);*/
         interface = new Interface(1,1,1);
     } catch(const char* erro)
     {
