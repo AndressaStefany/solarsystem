@@ -7,21 +7,23 @@
 
 #pragma once
 #include <iostream>
+#include <chrono>
 #include <GL/gl.h>
 #include <GL/glut.h>
 #include <string.h>
+#include "ship.h"
 
 using namespace std;
 
 class Interface {
 public:
-	char buffer[20]={'\0'};
-
-	Interface();
-    void debugPoints();
-	void displayText(float x, float y, int r, int g, int b, const char *string );
-	void printText(float pos_x, float pos_y, const char *text);
-	void printVariable(float pos_x, float pos_y, float f);
+	int red, green, blue;
+	Interface(int r, int g, int b);
+	void debugPoints();
+	void displayTextSmall(float x, float y, const char *string);
+	void displayTextMedium(float x, float y, const char *string);
+	void displayTextLarge(float x, float y, const char *string);
+	void drawInterface(int fps, double animation_speed, Ship* nave);
 	void drawBox(float w, float h, int r, int g, int b);
 };
 

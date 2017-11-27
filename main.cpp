@@ -54,17 +54,15 @@ void display()
     glTranslated(0,0,-10);
 	//interface->debugPoints();
     glDisable(GL_LIGHTING);
-    interface->displayText(-3,2,1,0,0,("FPS "+to_string(fps)).c_str());
-    glEnable(GL_LIGHTING);
-//	interface->drawBox(1, 1, 255, 255, 255);	//VER
+	interface->drawInterface(fps, animation_speed, nave);
+	glEnable(GL_LIGHTING);
     cam->posiciona();
+	//interface->drawBox(1000, 1000, 255, 255, 255);	//VER
     // Posiciona a luz
     glLightfv(GL_LIGHT0, GL_POSITION, light_position);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, light_ambient);
     // Nave
-    glEnable(GL_CULL_FACE);
     nave->draw();	//Frente da nave
-    glDisable(GL_CULL_FACE);
     // Ceu
     ceu->draw(vec3(0,0,0));
     // Planetas
@@ -112,6 +110,54 @@ void keyboard(unsigned char key, int x, int y)
     if(key == 't') Planet::withTrajectory= !Planet::withTrajectory;
 
     keys[key]= true;
+    keys[key] = true;
+
+	if(keys['e'])
+	{
+		if(animation_speed == 100.0)
+			animation_speed = 1000.0;
+		if(animation_speed == 50.0)
+			animation_speed = 100.0;
+		if(animation_speed == 20.0)
+			animation_speed = 50.0;
+		if(animation_speed == 10.0)
+			animation_speed = 20.0;
+		if(animation_speed == 5.0)
+			animation_speed = 10.0;
+		if(animation_speed == 2.0)
+			animation_speed = 5.0;
+		if(animation_speed == 1.0)
+			animation_speed = 2.0;
+		if(animation_speed == 0.5)
+			animation_speed = 1.0;
+		if(animation_speed == 0.1)
+			animation_speed = 0.5;
+		if(animation_speed == 0.01)
+			animation_speed = 0.1;
+	}
+    if(keys['r'])
+	{
+		if(animation_speed == 0.1)
+			animation_speed = 0.01;
+		if(animation_speed == 0.5)
+			animation_speed = 0.1;
+		if(animation_speed == 1.0)
+			animation_speed = 0.5;
+		if(animation_speed == 2.0)
+			animation_speed = 1.0;
+		if(animation_speed == 5.0)
+			animation_speed = 2.0;
+		if(animation_speed == 10.0)
+			animation_speed = 5.0;
+		if(animation_speed == 20.0)
+			animation_speed = 10.0;
+		if(animation_speed == 50.0)
+			animation_speed = 20.0;
+		if(animation_speed == 100.0)
+			animation_speed = 50.0;
+		if(animation_speed == 1000.0)
+			animation_speed = 100.0;
+	}
 }
 
 void specialkeysUp(int key, int x, int y)
@@ -188,6 +234,7 @@ int main(int argc, char**argv)
     glEnable(GL_TEXTURE_2D);
 
     glEnable(GL_LIGHTING);
+    glEnable(GL_CULL_FACE);
     glEnable(GL_LIGHT0);
     glEnable(GL_NORMALIZE);
 
@@ -203,28 +250,30 @@ int main(int argc, char**argv)
     glEnable(GL_MULTISAMPLE_ARB);
 
     try {
-        float k= 500;
+        float k = 500;
         cam = new Camera(vec3(-700,0,0), 0, 0);
         nave = new Ship("objetos/nave", vec3(0,0,500), vec3(0,0,0));
         ceu = new Sky("objetos/sky");
-        sun = new Planet("objetos/planets/sun", vec3(0,0,0), 0, 0, 0, 0, 0, 0, 0);
+        sun = new Planet("objetos/planets/sun", vec3(0,0,0), 0, 0, 0, 0, 0, 0, 7.25);
         mercury  = new Planet("objetos/planets/mercury",
-                              vec3(0,0,0), 400*1, 400*700/460.0, 88, 59, 0, 90, 7);
+                              vec3(0,0,0), 400*1, 400*700/460.0, 88, 58.65, 0, 90-6.34, 0.01);
         venus    = new Planet("objetos/planets/venus",
-                              vec3(0,0,0), 1000*1, 1000*1009/1007.0, 225, 243, 0, 90, 177);
+                              vec3(0,0,0), 1000*1, 1000*1009/1007.0, 225, -243.03, 0, 90-2.19, 177.36);
         earth    = new Planet("objetos/planets/earth",
-                              vec3(0,0,0), 1500*1, 1500*1520/1470.0, 365, 1, 0, 90, 23.5);
+                              vec3(0,0,0), 1500*1, 1500*1520/1470.0, 365, 1.00, 0, 90-1.57, 23.44);
         mars     = new Planet("objetos/planets/mars",
-                              vec3(0,0,0), 2000*1, 2000*2490/2050.0, 687, 1, 0, 90, 25);
+                              vec3(0,0,0), 2000*1, 2000*2490/2050.0, 687, 1.03, 0, 90-1.67, 25.19);
         jupiter  = new Planet("objetos/planets/jupiter",
-                              vec3(0,0,0), 2500*1, 2500*8170/7410.0, 4329/3.0, 0.4, 0, 90, 3);
+                              vec3(0,0,0), 2500*1, 2500*8170/7410.0, 4329/3.0, 0.41, 0, 90-0.32, 3.12);
         saturn   = new Planet("objetos/planets/saturn",
-                              vec3(0,0,0), 3000*1, 3000*15100/13500.0, 10751/4.5, 0.43, 0, 90, 27);
+                              vec3(0,0,0), 3000*1, 3000*15100/13500.0, 10751/4.5, 0.45, 0, 90-0.93, 26.73);
         uranus   = new Planet("objetos/planets/uranus",
-                              vec3(0,0,0), 3500*1, 3500*30000/27500.0, 30660/7.9, 0.76, 0, 90, 98);
+                              vec3(0,0,0), 3500*1, 3500*30000/27500.0, 30660/7.9, -0.76, 0, 90-1.02, 97.77);
         neptune  = new Planet("objetos/planets/neptune",
-                              vec3(0,0,0), 4000*1, 4000*45500/44500.0, 59860/11.125, 6.39, 0, 90, 30);
-        interface = new Interface();
+                              vec3(0,0,0), 4000*1, 4000*45500/44500.0, 59860/11.125, 0.67, 0, 90-0.72, 28.33);
+		/*pluto  = new Planet("objetos/planets/pluto",
+                              vec3(0,0,0), 4000*1, 4000*45500/44500.0, 90520/11.125, -6.39, 0, 90-0.72, 28.33);*/
+        interface = new Interface(1,1,1);
     } catch(const char* erro)
     {
         cerr << erro << endl;
