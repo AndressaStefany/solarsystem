@@ -24,6 +24,7 @@ char keys[255];
 map<int,bool> spkeys;
 GLfloat light_position[] = { 0, 0, 0, 1 }, light_ambient[]= {200.0,200.0,200.0,200};
 double animation_speed= 1;
+bool Planet::withTrajectory= false;
 
 Sky *ceu;
 Ship *nave;
@@ -61,7 +62,9 @@ void display()
     glLightfv(GL_LIGHT0, GL_POSITION, light_position);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, light_ambient);
     // Nave
+    glEnable(GL_CULL_FACE);
     nave->draw();	//Frente da nave
+    glDisable(GL_CULL_FACE);
     // Ceu
     ceu->draw(vec3(0,0,0));
     // Planetas
@@ -95,6 +98,19 @@ void keyboardUp(unsigned char key, int x, int y)
 
 void keyboard(unsigned char key, int x, int y)
 {
+    if(key == '1') cam->setFollow(mercury, 20);
+    if(key == '2') cam->setFollow(venus, 40);
+    if(key == '3') cam->setFollow(earth, 40);
+    if(key == '4') cam->setFollow(mars, 20);
+    if(key == '5') cam->setFollow(jupiter, 160);
+    if(key == '6') cam->setFollow(saturn, 160);
+    if(key == '7') cam->setFollow(uranus, 80);
+    if(key == '8') cam->setFollow(neptune, 80);
+    if(key == 'f') cam->setFree();
+    if(key == 'n') cam->setFollow(nave, 10);
+
+    if(key == 't') Planet::withTrajectory= !Planet::withTrajectory;
+
     keys[key]= true;
 }
 
@@ -142,17 +158,6 @@ void idle()
     uranus->update(delta_time);
     neptune->update(delta_time);
 
-    if(keys['1']) cam->setFollow(mercury, 20);
-    if(keys['2']) cam->setFollow(venus, 40);
-    if(keys['3']) cam->setFollow(earth, 40);
-    if(keys['4']) cam->setFollow(mars, 20);
-    if(keys['5']) cam->setFollow(jupiter, 160);
-    if(keys['6']) cam->setFollow(saturn, 160);
-    if(keys['7']) cam->setFollow(uranus, 80);
-    if(keys['8']) cam->setFollow(neptune, 80);
-    if(keys['f']) cam->setFree();
-    if(keys['n']) cam->setFollow(nave, 10);
-
     if(keys['e']) animation_speed+=delta_time;
     if(keys['r']) animation_speed-=delta_time;
     glutPostRedisplay();
@@ -183,8 +188,8 @@ int main(int argc, char**argv)
     glEnable(GL_TEXTURE_2D);
 
     glEnable(GL_LIGHTING);
-    glEnable(GL_CULL_FACE);
     glEnable(GL_LIGHT0);
+    glEnable(GL_NORMALIZE);
 
 //    glEnable(GL_LIGHT1);
 //    glEnable(GL_LIGHT2);

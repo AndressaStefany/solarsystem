@@ -25,7 +25,6 @@ vector<string> split(string name, char limite)
     return retorno;
 }
 
-#include <iostream>
 Loading::Loading(string arquivo)
 {
     load_obj(arquivo+".obj");
