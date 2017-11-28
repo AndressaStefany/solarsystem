@@ -31,12 +31,14 @@ void Ship::draw()
     glRotatef(ang_v,1,0,0);
     glRotatef(180,0,1,0);
 
+    glScalef(0.3,0.3,0.3);
     glCallList(objList);
 
     glTranslated(cabinCentroid.n[0], cabinCentroid.n[1], cabinCentroid.n[2]+1.5);
     glRotated(ang_cabin,1,0,0);
     glTranslated(-cabinCentroid.n[0], -cabinCentroid.n[1], -cabinCentroid.n[2]-1.5);
 
+    //glScalef(0.3,0.3,0.3);
     glCallList(listCabin);
     glPopMatrix();
 }
@@ -108,37 +110,22 @@ void Ship::update(double delta_time)
 
     if(spkeys[GLUT_KEY_UP])
     {
-        ang_v -= 1;
+        ang_v -= turn_speed*delta_time;
     }
     if(spkeys[GLUT_KEY_DOWN])
     {
-        ang_v += 1;
+        ang_v += turn_speed*delta_time;
     }
     if(spkeys[GLUT_KEY_LEFT])
     {
-        ang_h += 1;
+        ang_h += turn_speed*delta_time;
     }
     if(spkeys[GLUT_KEY_RIGHT])
     {
-        ang_h -= 1;
+        ang_h -= turn_speed*delta_time;
     }
-    if(ang_v >= 360)
-    {
-        ang_v -= 360;
-    }
-    if(ang_v < 0)
-    {
-        ang_v += 360;
-    }
-    if(ang_h >= 360)
-    {
-        ang_h -= 360;
-    }
-    if(ang_h < 0)
-    {
-        ang_h += 360;
-    }
-
+    ang_v=fmod(ang_v,360);
+    ang_h=fmod(ang_h,360);
     pos+=dir*sp*delta_time;
 }
 

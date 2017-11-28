@@ -18,7 +18,7 @@ class Ship : public Loading
     vec3 pos, speed;
     bool open= false;
     float ang_v = 0, ang_h = 0, ang_cabin = 0, sp = 0;
-    const float max_speed = 10, acceleration = 0.25, turn_speed = 45;
+    const float max_speed = 100, acceleration = 0.1, turn_speed = 30;
     GLuint listCabin;
     vec3 cabinCentroid;
     void generateList();

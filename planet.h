@@ -23,6 +23,7 @@ public:
     void draw();
     void update(double delta_time);
     friend class Camera;
+    friend class Satellite;
 };
 
 

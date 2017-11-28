@@ -71,7 +71,7 @@ void Interface::drawInterface(int fps, double animation_speed, Ship* nave) {
 	//Bottom Interface
 	//Left - Angle Data
 	displayTextLarge(-3.125,-2,("Ship Orientation"));
-	displayTextMedium(-3.0,-2.25,("Vertical: "+to_string(((-1)*(int)nave->getAng()[0])+360)+" degrees").c_str());
+	displayTextMedium(-3.0,-2.25,("Vertical: "+to_string(-((int)nave->getAng()[0]))+" degrees").c_str());
 	displayTextMedium(-3.0,-2.5,("Horizontal: "+to_string((int)nave->getAng()[1])+" degrees").c_str());
 	//Middle - Position Data
 	displayTextLarge(-0.5,-2,("Ship Position"));

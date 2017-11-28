@@ -19,12 +19,85 @@
 using namespace std;
 using namespace chrono;
 
+class Satellite : Loading
+{
+    Planet* main;
+    double a, b, angv, angh, t1= 0, t2=0, vtranslation, vrotation;
+    vec3 pos;
+public:
+    static bool withTrajectory;
+    Satellite(string arquivo, Planet* main_, vec3 pos_, double a_, double b_,
+          double angv_, double angh_, double vtranslation_, double vrotation_) : Loading(arquivo), pos(pos_), a(a_), b(b_), angh(angh_), angv(angv_)
+    {
+        vtranslation = (vtranslation_!=0)?((2*M_PI)/vtranslation_):0;
+        vrotation= (vrotation_!=0)?(360.0/vrotation_):0;//vrotation_/vtranslation_*2*M_PI;
+        main= main_;
+        genTrajectoryList();
+    }
+    void draw()
+    {
+        glPushMatrix();
+        glTranslated(main->pos.n[0],main->pos.n[1],main->pos.n[2]);
+        glRotated(main->angv,1,0,0);
+        glRotated(main->angh,0,1,0);
+        glTranslated(main->a*cos(main->t1), main->b*sin(main->t1), 0);
+        glRotated(-main->angh,0,1,0);
+        glRotated(-main->angv,1,0,0);
+
+        glTranslated(pos.n[0],pos.n[1],pos.n[2]);
+        glRotated(angh,0,1,0);
+        glRotated(angv,1,0,0);
+        if(withTrajectory)
+        {
+            glDisable(GL_LIGHTING);
+            glCallList(trajectoryList);
+            glEnable(GL_LIGHTING);
+        }
+        glTranslated(a*cos(t1), b*sin(t1), 0);
+        glRotated(-angh,0,1,0);
+        glRotated(-angv,1,0,0);
+        glRotated(t2, 0,1,0);
+        Loading::draw();
+        glPopMatrix();
+    }
+    void update(double delta_time)
+    {
+        t1+=vtranslation*delta_time;
+        t2+=vrotation*delta_time;
+        t1= fmod(t1, 2*M_PI);
+        t2= fmod(t2, 360);
+    }
+    GLuint trajectoryList;
+    void genTrajectoryList()
+    {
+        trajectoryList = glGenLists(1);
+        if(trajectoryList == 0)
+            throw "Erro on generating list";
+        double x;
+        glNewList(trajectoryList, GL_COMPILE);
+        glPushMatrix();
+        glColor3f(1,1,1);
+        glLineWidth(2);
+        glBegin(GL_LINE_LOOP);
+        for(int i=0; i<200; i++)
+        {
+            x=i/200.0*M_PI*2;
+            glVertex3d(a*cos(x), b*sin(x), 0);
+        }
+        glEnd();
+        glPopMatrix();
+        glEndList();
+    }
+};
+
+Satellite *lua;
 int fps= 0;
 char keys[255];
 map<int,bool> spkeys;
 GLfloat light_position[] = { 0, 0, 0, 1 }, light_ambient[]= {200.0,200.0,200.0,200};
 double animation_speed= 1;
 bool Planet::withTrajectory= false;
+bool Satellite::withTrajectory= false;
 
 Sky *ceu;
 Ship *nave;
@@ -62,7 +135,9 @@ void display()
     glLightfv(GL_LIGHT0, GL_POSITION, light_position);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, light_ambient);
     // Nave
+    glEnable(GL_CULL_FACE);
     nave->draw();	//Frente da nave
+    glDisable(GL_CULL_FACE);
     // Ceu
     ceu->draw(vec3(0,0,0));
     // Planetas
@@ -75,6 +150,7 @@ void display()
     saturn->draw();
     uranus->draw();
     neptune->draw();
+    lua->draw();
 
     glutSwapBuffers();
 }
@@ -107,7 +183,10 @@ void keyboard(unsigned char key, int x, int y)
     if(key == 'f') cam->setFree();
     if(key == 'n') cam->setFollow(nave, 10);
 
-    if(key == 't') Planet::withTrajectory= !Planet::withTrajectory;
+    if(key == 't'){
+        Planet::withTrajectory= !Planet::withTrajectory;
+        Satellite::withTrajectory= !Satellite::withTrajectory;
+    }
 
     keys[key]= true;
     keys[key] = true;
@@ -188,6 +267,7 @@ void idle()
     if(total>1E6){
         fps= cont;
         total=cont=0;
+//        cout << fps << endl;
     }
     delta_time/=1E6;
     delta_time*=animation_speed;
@@ -203,9 +283,8 @@ void idle()
     saturn->update(delta_time);
     uranus->update(delta_time);
     neptune->update(delta_time);
+    lua->update(delta_time);
 
-    if(keys['e']) animation_speed+=delta_time;
-    if(keys['r']) animation_speed-=delta_time;
     glutPostRedisplay();
 }
 
@@ -213,7 +292,7 @@ int main(int argc, char**argv)
 {
     glutInit(&argc, argv);
 
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH | GLUT_MULTISAMPLE);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH); //GLUT_MULTISAMPLE
     glutInitWindowSize(640,480);
     glutInitWindowPosition (100, 100);
     glutCreateWindow("SolarSys");
@@ -234,9 +313,8 @@ int main(int argc, char**argv)
     glEnable(GL_TEXTURE_2D);
 
     glEnable(GL_LIGHTING);
-    glEnable(GL_CULL_FACE);
     glEnable(GL_LIGHT0);
-    glEnable(GL_NORMALIZE);
+    //glEnable(GL_NORMALIZE);
 
 //    glEnable(GL_LIGHT1);
 //    glEnable(GL_LIGHT2);
@@ -247,7 +325,7 @@ int main(int argc, char**argv)
     glAlphaFunc(GL_SRC_ALPHA,0);
     glEnable(GL_ALPHA_TEST);
 
-    glEnable(GL_MULTISAMPLE_ARB);
+//    glEnable(GL_MULTISAMPLE_ARB);
 
     try {
         float k = 500;
@@ -271,7 +349,8 @@ int main(int argc, char**argv)
                               vec3(0,0,0), 3500*1, 3500*30000/27500.0, 30660/7.9, -0.76, 0, 90-1.02, 97.77);
         neptune  = new Planet("objetos/planets/neptune",
                               vec3(0,0,0), 4000*1, 4000*45500/44500.0, 59860/11.125, 0.67, 0, 90-0.72, 28.33);
-		/*pluto  = new Planet("objetos/planets/pluto",
+        lua= new Satellite("objetos/planets/moon", earth, vec3(-3,0,0), 15, 10, 90-15, 0, 27, 27);
+        /*pluto  = new Planet("objetos/planets/pluto",
                               vec3(0,0,0), 4000*1, 4000*45500/44500.0, 90520/11.125, -6.39, 0, 90-0.72, 28.33);*/
         interface = new Interface(1,1,1);
     } catch(const char* erro)

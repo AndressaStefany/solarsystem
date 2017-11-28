@@ -21,7 +21,7 @@ class Camera
     vec3 pos, dir;
     double dx, dy, last_x= 0, last_y= 0, zoom= 0;
     int btt[3]= {0,0,0};
-    const double speed= 100;
+    const double speed= 50;
     Planet* follow_planet= nullptr;
     Ship* follow_ship= nullptr;
     bool free_cam= true;
